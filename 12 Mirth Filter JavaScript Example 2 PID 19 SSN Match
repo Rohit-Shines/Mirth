@@ -1,0 +1,11 @@
+var valueToCheck = '123'; // checking for this value
+
+
+for each (var segment in msg['PID']) {
+    if (segment['PID.19']['PID.19.1'].toString() === valueToCheck) {
+        // The value is present in the PID-19 field
+        return true;
+    }
+}
+// The value is not found in any of the PID segments or PID-19 fields
+return false;
