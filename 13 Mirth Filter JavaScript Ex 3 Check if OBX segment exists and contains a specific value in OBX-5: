@@ -1,0 +1,15 @@
+//Check if OBX segment exists and contains a specific value in OBX-5:
+
+
+if (msg['OBX'].length() > 0) {
+    for each (var obxSegment in msg['OBX']) {
+        if (obxSegment['OBX.5']['OBX.5.1'].toString() === 'result') {
+            // The OBX segment exists and OBX-5 contains 'Result'
+            return true;
+        }
+    }
+}
+// The OBX segment does not exist or OBX-5 does not contain 'Result'
+return false;
+
+
