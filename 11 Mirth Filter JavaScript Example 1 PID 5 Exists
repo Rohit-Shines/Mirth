@@ -1,0 +1,10 @@
+// Check if PID-5 exists
+
+
+if (msg['PID']['PID.5']['PID.5.1'].length() > 0) {      
+    // PID-5 exists, send the message  ms
+    return true;
+} else {
+    // PID-5 does not exist, do not send the message
+    return false;
+}
