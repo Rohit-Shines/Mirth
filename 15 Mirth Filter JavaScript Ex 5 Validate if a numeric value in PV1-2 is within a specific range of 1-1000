@@ -1,0 +1,13 @@
+//Validate if a numeric value in PV1-2 is within a specific range:
+
+
+var pv1_2Value = parseInt(msg['S1'].toString(), 10);
+var minValue = 1;
+var maxValue = 1000;
+
+if (!isNaN(pv1_2Value) && pv1_2Value >= minValue && pv1_2Value <= maxValue) {
+    // The PV1-2 value is within the valid range
+    return true;
+}
+// The PV1-2 value is outside the valid range or not a number
+return false;
