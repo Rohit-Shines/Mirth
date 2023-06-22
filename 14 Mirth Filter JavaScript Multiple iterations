@@ -1,0 +1,18 @@
+//This code will check the multiple  iterations of obx-5 value and should satisfy any one of it
+
+
+// Check if any iteration of OBX-5.1 field contains the value "result"
+var obxSegments = msg['OBX'];
+if (obxSegments.length() > 0) {
+    for each (var obxSegment in obxSegments) {
+        var obx5Values = obxSegment['OBX.5'];
+        for each (var obx5Value in obx5Values) {
+            if (obx5Value['OBX.5.1'].toString() === 'result') {
+                // The OBX segment exists and OBX-5.1 contains 'result'
+                return true;
+            }
+        }
+    }
+}
+// The OBX segment does not exist or no OBX-5.1 value contains 'result'
+return false;
