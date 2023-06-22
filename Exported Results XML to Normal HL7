@@ -1,0 +1,49 @@
+# This Code will pickup the ( exported channel results in XML format containing channel data) and remove all the tags etc from it and save it in HL7 FORMAT
+# This code can do all the things in bulk at a time asking for folder to choose input and save output
+
+# XML TO HL7(tx) multiple different folders
+
+
+import os
+import xml.etree.ElementTree as ET
+
+def extract_hl7_from_xml(xml_file, output_folder):
+    # Parse the XML file
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+
+    hl7_data = None
+
+    # Find the first occurrence of <content> and extract its text content
+    for content in root.iter('content'):
+        hl7_data = content.text.strip()
+        break
+
+    # Save the extracted HL7 data to a .txt file
+    if hl7_data is not None:
+        # Create the output file path with the same name as the XML file
+        output_file = os.path.splitext(os.path.basename(xml_file))[0] + ".txt"
+
+        # Create the output file path in the specified output folder
+        output_file_path = os.path.join(output_folder, output_file)
+
+        with open(output_file_path, 'w') as file:
+            file.write(hl7_data)
+        
+        print(f"HL7 data extracted from '{xml_file}' and saved to '{output_file_path}' successfully.")
+    else:
+        print(f"No HL7 data found in '{xml_file}'.")
+
+# Prompt the user to choose a folder path containing XML files
+folder_path = input("Enter the folder path containing XML files: ")
+
+# Prompt the user to choose a folder path to save the output files
+output_folder_path = input("Enter the folder path to save the output files: ")
+
+# Iterate over the XML files in the chosen folder
+for filename in os.listdir(folder_path):
+    if filename.endswith(".xml"):
+        xml_file_path = os.path.join(folder_path, filename)
+
+        # Call the function to extract and save the data between <content> tags of the first occurrence
+        extract_hl7_from_xml(xml_file_path, output_folder_path)
