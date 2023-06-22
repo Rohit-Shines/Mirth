@@ -1,0 +1,9 @@
+
+//Check if a specific segment is present (e.g., AL1 segment):
+
+if (msg['AL1'].length() > 0) {
+    // The AL1 segment exists
+    return true;
+}
+// The AL1 segment does not exist
+return false;
