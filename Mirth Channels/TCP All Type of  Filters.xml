@@ -1,0 +1,2032 @@
+<channel version="4.3.0">
+  <id>d3445a07-46e8-47e4-b97a-190cf001bb8e</id>
+  <nextMetaDataId>4</nextMetaDataId>
+  <name>TCP All Type of  Filters</name>
+  <description></description>
+  <revision>67</revision>
+  <sourceConnector version="4.3.0">
+    <metaDataId>0</metaDataId>
+    <name>sourceConnector</name>
+    <properties class="com.mirth.connect.connectors.tcp.TcpReceiverProperties" version="4.3.0">
+      <pluginProperties/>
+      <listenerConnectorProperties version="4.3.0">
+        <host>127.0.0.1</host>
+        <port>3003</port>
+      </listenerConnectorProperties>
+      <sourceConnectorProperties version="4.3.0">
+        <responseVariable>Auto-generate (After source transformer)</responseVariable>
+        <respondAfterProcessing>true</respondAfterProcessing>
+        <processBatch>false</processBatch>
+        <firstResponse>true</firstResponse>
+        <processingThreads>1</processingThreads>
+        <resourceIds class="linked-hash-map">
+          <entry>
+            <string>Default Resource</string>
+            <string>[Default Resource]</string>
+          </entry>
+        </resourceIds>
+        <queueBufferSize>1000</queueBufferSize>
+      </sourceConnectorProperties>
+      <transmissionModeProperties class="com.mirth.connect.plugins.mllpmode.MLLPModeProperties">
+        <pluginPointName>MLLP</pluginPointName>
+        <startOfMessageBytes>0B</startOfMessageBytes>
+        <endOfMessageBytes>1C0D</endOfMessageBytes>
+        <useMLLPv2>false</useMLLPv2>
+        <ackBytes>06</ackBytes>
+        <nackBytes>15</nackBytes>
+        <maxRetries>2</maxRetries>
+      </transmissionModeProperties>
+      <serverMode>true</serverMode>
+      <remoteAddress></remoteAddress>
+      <remotePort></remotePort>
+      <overrideLocalBinding>false</overrideLocalBinding>
+      <reconnectInterval>5000</reconnectInterval>
+      <receiveTimeout>0</receiveTimeout>
+      <bufferSize>65536</bufferSize>
+      <maxConnections>10</maxConnections>
+      <keepConnectionOpen>true</keepConnectionOpen>
+      <dataTypeBinary>false</dataTypeBinary>
+      <charsetEncoding>DEFAULT_ENCODING</charsetEncoding>
+      <respondOnNewConnection>0</respondOnNewConnection>
+      <responseAddress></responseAddress>
+      <responsePort></responsePort>
+    </properties>
+    <transformer version="4.3.0">
+      <elements>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>TRUNACATE PID 5</name>
+          <sequenceNumber>0</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//Truncate values into 3 letters 
+
+// Get the value of PID-5 from the source message
+var pid5Value = msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].toString();
+
+// Truncate the value to 3 characters
+var truncatedValue = pid5Value.substring(0, 3);
+
+// Set the truncated value back to PID-5 in the destination message
+msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;] = truncatedValue;</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>hardcode MSH 10.1</name>
+          <sequenceNumber>1</sequenceNumber>
+          <enabled>false</enabled>
+          <script>msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;] =&quot;99999999&quot;</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Logger info</name>
+          <sequenceNumber>2</sequenceNumber>
+          <enabled>false</enabled>
+          <script>// Get the inbound message
+var inboundMsg = $(&apos;message&apos;);
+
+// Log a message to the Mirth Connect Server log
+logger.info(&apos;Received inbound message: &apos; + inboundMsg);
+
+// Process the message
+// ...
+
+// Log a message to the Mirth Connect Server log
+logger.info(&apos;Processed inbound message: &apos; + inboundMsg);
+
+//
+//// Set the outbound message
+//$(&apos;message&apos;).setText(&apos;Processed message&apos;);
+//
+//// Log a message to the Mirth Connect Server log
+//logger.info(&apos;Sent outbound message: &apos; + $(&apos;message&apos;));</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>logger.info error</name>
+          <sequenceNumber>3</sequenceNumber>
+          <enabled>false</enabled>
+          <script>var myMessage = &apos;message&apos;;
+
+// Log an informational message
+//logger.info(&apos;Received message: &apos; + myMessage);
+
+// Attempt to process the message
+try {
+	msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() = ADT
+  // Do some processing here
+  // ...
+  // ...
+  // ...
+
+  // If everything is successful, log a success message
+  logger.info(&apos;Message processed successfully: &apos; + myMessage);
+}
+catch (error) {
+  // If an error occurs, log an error message
+  logger.error(&apos;Error processing message: &apos; + error);
+}
+
+finally {
+  // Code that runs regardless of whether an error was thrown or not
+  logger.info(&apos;Executing the code even after getting an error.&apos;);
+}</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Send email with SMTP connection</name>
+          <sequenceNumber>4</sequenceNumber>
+          <enabled>false</enabled>
+          <script>// Create SMTP connection
+var smtpConn = SMTPConnectionFactory.createSMTPConnection();
+
+// Define message details
+var to = &apos;rohit.gundu@westpark.org&apos;;
+var cc = &apos;rohit.gundu@westpark.org&apos;;
+var from = &apos;rohit.gundu@westpark.org&apos;;
+var subject = &apos;Testing the email&apos;;
+var body = &apos;This is a test email.&apos;;
+var charset = &apos;UTF-8&apos;;
+
+// Send email
+smtpConn.send(to, cc, from, subject, body, charset);</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Trigger an alert</name>
+          <sequenceNumber>5</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//The alerts.sendAlert(&apos;message&apos;) function in Mirth is used to send alerts to the Mirth Connect Administrator
+//through various channels such as email, SMS, or Slack. 
+//The message parameter contains the text of the alert to be sent.
+
+
+
+var alertMessage = &quot;Error: Mirth Connect channel failed to process messages.&quot;;
+var alertSubject = &quot;Mirth Connect Alert&quot;;
+var recipientEmail = &quot;rohit.gundu@westpark.org&quot;;
+
+// Send an email alert to the Mirth Connect administrator
+alerts.sendAlert(alertMessage, alertSubject, recipientEmail);</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Build Map Mapper</name>
+          <sequenceNumber>6</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//In Mirth, the Maps.map() function is used to create a new Map object,
+//which is a collection of key-value pairs. 
+//The add() method is then used to add a new key-value pair to the Map.
+
+// Create a new map object
+var map = Maps.map();
+
+// Add a new key-value pair to the map
+map.add(&apos;name&apos;, &apos;JohnSmith&apos;);
+
+
+// Retrieve the value of a key from the map
+var name = map.get(&apos;name&apos;);
+
+// this will hardcode the variable name to MSH 10.1
+msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;]=name;
+
+
+//logger.info(&apos;Name: &apos; + name); // outputs &quot;Name: John Smith&quot;
+
+
+// Create a new map object
+//var map = Maps.map();
+//
+//// Add multiple key-value pairs to the map
+//map.add(&apos;name&apos;, &apos;John Smith&apos;);
+//map.add(&apos;age&apos;, 30);
+//map.add(&apos;email&apos;, &apos;john.smith@example.com&apos;);
+//
+//// Retrieve the values of the keys from the map
+//var name = map.get(&apos;name&apos;);
+//var age = map.get(&apos;age&apos;);
+//var email = map.get(&apos;email&apos;);
+//
+//logger.info(&apos;Name: &apos; + name); // outputs &quot;Name: John Smith&quot;
+//logger.info(&apos;Age: &apos; + age); // outputs &quot;Age: 30&quot;
+//logger.info(&apos;Email: &apos; + email); // outputs &quot;Email: john.smith@example.com&quot;</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Buils List</name>
+          <sequenceNumber>7</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//Lists.list().append(element) is used to create and manipulate lists. Here, Lists is an object that provides a set of 
+//methods to work with lists. list() method is used to create a new list, while append() method is used to add an element 
+//to the list.
+
+
+// Create a new list object
+var list = Lists.list();
+
+// Add elements to the list
+list.append(&apos;12345&apos;);
+list.append(&apos;abcdef&apos;);
+list.append(&apos;ABCDEF&apos;);
+
+// Retrieve the value of an element from the list
+var data = list.get(0);
+logger.info(&apos;Used list function &apos; + data); // outputs &quot;First fruit: apple&quot;</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>Java  Class</name>
+          <sequenceNumber>8</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//In Mirth, you can use Java libraries and classes by importing them using the Packages object.
+
+
+
+
+// Import the Java SimpleDateFormat class
+var SimpleDateFormat = Packages.java.text.SimpleDateFormat;
+
+// Create a new SimpleDateFormat object and format the current date
+var dateFormat = new SimpleDateFormat(&quot;dd-mm-yyyy&quot;);
+var currentDate = dateFormat.format(new Date());
+
+// Log the formatted date
+logger.info(&apos;Current Date: &apos; + currentDate);</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.3.0">
+          <name>UUID Generator</name>
+          <sequenceNumber>9</sequenceNumber>
+          <enabled>false</enabled>
+          <script>//UUIDGenerator.getUUID() is a method used to generate a Universally Unique Identifier (UUID),
+//which is a 128-bit value used to identify information in computer systems. 
+//The UUIDGenerator class provides a way to generate UUIDs in Mirth.
+
+
+
+
+// Import the UUIDGenerator class
+var UUIDGenerator = Packages.com.mirth.connect.util.UUIDGenerator;
+
+// Generate a UUID using the getUUID() method
+var uuid = UUIDGenerator.getUUID();
+
+// Log the generated UUID
+logger.info(&quot;Generated UUID: &quot; + uuid);</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+      </elements>
+      <inboundTemplate encoding="base64">TVNIfF5+XCZ8U2VuZGluZ0FwcGxpY2F0aW9ufFNlbmRpbmdGYWNpbGl0eXxSZWNlaXZpbmdBcHBsaWNhdGlvbnxSZWNlaXZpbmdGYWNpbGl0eXxNZXNzYWdlRGF0ZVRpbWV8fEFEVF5BMDR8TWVzc2FnZUNvbnRyb2xJRHxQcm9jZXNzaW5nSUR8VmVyc2lvbklEfENvdW50cnlDb2RlfENoYXJhY3RlclNldElEfFByaW5jaXBhbExhbmd1YWdlT2ZNZXNzYWdlfA1FVk58QTA0fE1lc3NhZ2VEYXRlVGltZXx8DVBJRHwxfHxQYXRpZW50SUR8QWx0ZXJuYXRlUGF0aWVudElEfHxMYXN0TmFtZV5GaXJzdE5hbWVeTWlkZGxlSW5pdGlhbF5TdWZmaXheUHJlZml4fEFsaWFzTmFtZXxCaXJ0aERhdGV8R2VuZGVyfHxBZGRyZXNzfFBob25lTnVtYmVyfE1hcml0YWxTdGF0dXN8UHJpbWFyeUxhbmd1YWdlfE5hdGlvbmFsaXR5fFJlbGlnaW9ufFJhY2V8RXRobmljR3JvdXB8QmlydGhQbGFjZXxDaXRpemVuc2hpcHxDb250YWN0UGVyc29uTmFtZXxDb250YWN0UGVyc29uUGhvbmVOdW1iZXJ8DVBWMXwxfEFkbWl0dGluZ0ZhY2lsaXR5TmFtZXxQYXRpZW50Q2xhc3N8QXNzaWduZWRQYXRpZW50TG9jYXRpb258QWRtaXNzaW9uVHlwZXxQcmVhZG1pdE51bWJlcnxQcmlvclBhdGllbnRMb2NhdGlvbnxBdHRlbmRpbmdEb2N0b3J8UmVmZXJyaW5nRG9jdG9yfENvbnN1bHRpbmdEb2N0b3J8QWRtaXREYXRlVGltZXxEaXNjaGFyZ2VEYXRlVGltZXxEaXNjaGFyZ2VEaXNwb3NpdGlvbnxBZG1pdHRpbmdEaWFnbm9zaXN8UGF0aWVudFR5cGV8VmlzaXROdW1iZXJ8RmluYW5jaWFsQ2xhc3N8Q2hhcmdlUHJpY2VJbmRpY2F0b3J8Q291cnRlc3lDb2RlfENyZWRpdFJhdGluZ3xDb250cmFjdENvZGV8VHJhbnNmZXJlZFRvTG9jYXRpb258VmlzaXRJbmRpY2F0b3J8T3RoZXJIZWFsdGhjYXJlUHJvdmlkZXJ8UGF0aWVudFN0YXR1c3xFc2NvcnRSZXF1aXJlZHxBZG1pdFNvdXJjZXwN</inboundTemplate>
+      <outboundTemplate encoding="base64"></outboundTemplate>
+      <inboundDataType>HL7V2</inboundDataType>
+      <outboundDataType>HL7V2</outboundDataType>
+      <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+          <handleRepetitions>true</handleRepetitions>
+          <handleSubcomponents>true</handleSubcomponents>
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <stripNamespaces>false</stripNamespaces>
+          <segmentDelimiter>\r</segmentDelimiter>
+          <convertLineBreaks>true</convertLineBreaks>
+        </serializationProperties>
+        <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <segmentDelimiter>\r</segmentDelimiter>
+        </deserializationProperties>
+        <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+          <splitType>MSH_Segment</splitType>
+          <batchScript></batchScript>
+        </batchProperties>
+        <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+          <segmentDelimiter>\r</segmentDelimiter>
+          <successfulACKCode>AA</successfulACKCode>
+          <successfulACKMessage></successfulACKMessage>
+          <errorACKCode>AE</errorACKCode>
+          <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+          <rejectedACKCode>AR</rejectedACKCode>
+          <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+          <msh15ACKAccept>false</msh15ACKAccept>
+          <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+        </responseGenerationProperties>
+        <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+          <successfulACKCode>AA,CA</successfulACKCode>
+          <errorACKCode>AE,CE</errorACKCode>
+          <rejectedACKCode>AR,CR</rejectedACKCode>
+          <validateMessageControlId>true</validateMessageControlId>
+          <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+          <originalIdMapVariable></originalIdMapVariable>
+        </responseValidationProperties>
+      </inboundProperties>
+      <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+        <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+          <handleRepetitions>true</handleRepetitions>
+          <handleSubcomponents>true</handleSubcomponents>
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <stripNamespaces>false</stripNamespaces>
+          <segmentDelimiter>\r</segmentDelimiter>
+          <convertLineBreaks>true</convertLineBreaks>
+        </serializationProperties>
+        <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+          <useStrictParser>false</useStrictParser>
+          <useStrictValidation>false</useStrictValidation>
+          <segmentDelimiter>\r</segmentDelimiter>
+        </deserializationProperties>
+        <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+          <splitType>MSH_Segment</splitType>
+          <batchScript></batchScript>
+        </batchProperties>
+        <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+          <segmentDelimiter>\r</segmentDelimiter>
+          <successfulACKCode>AA</successfulACKCode>
+          <successfulACKMessage></successfulACKMessage>
+          <errorACKCode>AE</errorACKCode>
+          <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+          <rejectedACKCode>AR</rejectedACKCode>
+          <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+          <msh15ACKAccept>false</msh15ACKAccept>
+          <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+        </responseGenerationProperties>
+        <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+          <successfulACKCode>AA,CA</successfulACKCode>
+          <errorACKCode>AE,CE</errorACKCode>
+          <rejectedACKCode>AR,CR</rejectedACKCode>
+          <validateMessageControlId>true</validateMessageControlId>
+          <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+          <originalIdMapVariable></originalIdMapVariable>
+        </responseValidationProperties>
+      </outboundProperties>
+    </transformer>
+    <filter version="4.3.0">
+      <elements>
+        <com.mirth.connect.plugins.rulebuilder.RuleBuilderRule version="4.3.0">
+          <name>Accept message if &quot;msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString()&quot; equals &quot;ADT&quot;</name>
+          <sequenceNumber>0</sequenceNumber>
+          <enabled>false</enabled>
+          <field>msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString()</field>
+          <condition>EQUALS</condition>
+          <values>
+            <string>&quot;ADT&quot;</string>
+          </values>
+        </com.mirth.connect.plugins.rulebuilder.RuleBuilderRule>
+        <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+          <name>Chekcing for Integer in msh 10.1</name>
+          <sequenceNumber>1</sequenceNumber>
+          <enabled>false</enabled>
+          <operator>AND</operator>
+          <script>// FILTER WHICH SENDS MESSAGES IF MSH 10.1  ARE IN BINARY
+
+
+// Check if MSH 10.1 is a binary number
+if (/^\d+$/.test(msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;].toString())) {
+  // MSH 10.1 is a binary number, send the message
+  return true;
+} else {
+  // MSH 10.1 is not a binary number, do not send the message
+  return false;
+}</script>
+        </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+        <com.mirth.connect.model.IteratorRule version="4.3.0">
+          <name>Accept message if at least one of the iterations returns true for each msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString()</name>
+          <sequenceNumber>2</sequenceNumber>
+          <enabled>false</enabled>
+          <operator>AND</operator>
+          <properties>
+            <target>msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString()</target>
+            <indexVariable>i</indexVariable>
+            <prefixSubstitutions>
+              <string>&quot;123&quot;</string>
+            </prefixSubstitutions>
+            <children/>
+            <intersectIterations>false</intersectIterations>
+            <breakEarly>true</breakEarly>
+          </properties>
+        </com.mirth.connect.model.IteratorRule>
+      </elements>
+    </filter>
+    <transportName>TCP Listener</transportName>
+    <mode>SOURCE</mode>
+    <enabled>true</enabled>
+    <waitForPrevious>true</waitForPrevious>
+  </sourceConnector>
+  <destinationConnectors>
+    <connector version="4.3.0">
+      <metaDataId>1</metaDataId>
+      <name>Destination 1</name>
+      <properties class="com.mirth.connect.connectors.tcp.TcpDispatcherProperties" version="4.3.0">
+        <pluginProperties/>
+        <destinationConnectorProperties version="4.3.0">
+          <queueEnabled>false</queueEnabled>
+          <sendFirst>false</sendFirst>
+          <retryIntervalMillis>10000</retryIntervalMillis>
+          <regenerateTemplate>false</regenerateTemplate>
+          <retryCount>0</retryCount>
+          <rotate>false</rotate>
+          <includeFilterTransformer>false</includeFilterTransformer>
+          <threadCount>1</threadCount>
+          <threadAssignmentVariable></threadAssignmentVariable>
+          <validateResponse>true</validateResponse>
+          <resourceIds class="linked-hash-map">
+            <entry>
+              <string>Default Resource</string>
+              <string>[Default Resource]</string>
+            </entry>
+          </resourceIds>
+          <queueBufferSize>1000</queueBufferSize>
+          <reattachAttachments>true</reattachAttachments>
+        </destinationConnectorProperties>
+        <transmissionModeProperties class="com.mirth.connect.plugins.mllpmode.MLLPModeProperties">
+          <pluginPointName>MLLP</pluginPointName>
+          <startOfMessageBytes>0B</startOfMessageBytes>
+          <endOfMessageBytes>1C0D</endOfMessageBytes>
+          <useMLLPv2>false</useMLLPv2>
+          <ackBytes>06</ackBytes>
+          <nackBytes>15</nackBytes>
+          <maxRetries>2</maxRetries>
+        </transmissionModeProperties>
+        <serverMode>false</serverMode>
+        <remoteAddress>10.0.0.77</remoteAddress>
+        <remotePort>3000</remotePort>
+        <overrideLocalBinding>false</overrideLocalBinding>
+        <localAddress>0.0.0.0</localAddress>
+        <localPort>0</localPort>
+        <sendTimeout>5000</sendTimeout>
+        <bufferSize>65536</bufferSize>
+        <maxConnections>10</maxConnections>
+        <keepConnectionOpen>false</keepConnectionOpen>
+        <checkRemoteHost>false</checkRemoteHost>
+        <responseTimeout>5000</responseTimeout>
+        <ignoreResponse>false</ignoreResponse>
+        <queueOnResponseTimeout>true</queueOnResponseTimeout>
+        <dataTypeBinary>false</dataTypeBinary>
+        <charsetEncoding>DEFAULT_ENCODING</charsetEncoding>
+        <template>${message.encodedData}</template>
+      </properties>
+      <transformer version="4.3.0">
+        <elements/>
+        <inboundTemplate encoding="base64">TVNIfF5+XCZ8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHwNClBJRHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8CkVWTnx8fHx8fHx8fHx8fApQVjF8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fA1PUkN8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fA1PQlJ8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8DU9CWHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fA==</inboundTemplate>
+        <outboundTemplate encoding="base64"></outboundTemplate>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+            <handleRepetitions>true</handleRepetitions>
+            <handleSubcomponents>true</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>false</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>true</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+            <handleRepetitions>true</handleRepetitions>
+            <handleSubcomponents>true</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>false</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>true</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </transformer>
+      <responseTransformer version="4.3.0">
+        <elements/>
+        <inboundDataType>HL7V2</inboundDataType>
+        <outboundDataType>HL7V2</outboundDataType>
+        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+            <handleRepetitions>true</handleRepetitions>
+            <handleSubcomponents>true</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>false</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>false</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </inboundProperties>
+        <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="4.3.0">
+          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="4.3.0">
+            <handleRepetitions>true</handleRepetitions>
+            <handleSubcomponents>true</handleSubcomponents>
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <stripNamespaces>false</stripNamespaces>
+            <segmentDelimiter>\r</segmentDelimiter>
+            <convertLineBreaks>true</convertLineBreaks>
+          </serializationProperties>
+          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="4.3.0">
+            <useStrictParser>false</useStrictParser>
+            <useStrictValidation>false</useStrictValidation>
+            <segmentDelimiter>\r</segmentDelimiter>
+          </deserializationProperties>
+          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="4.3.0">
+            <splitType>MSH_Segment</splitType>
+            <batchScript></batchScript>
+          </batchProperties>
+          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="4.3.0">
+            <segmentDelimiter>\r</segmentDelimiter>
+            <successfulACKCode>AA</successfulACKCode>
+            <successfulACKMessage></successfulACKMessage>
+            <errorACKCode>AE</errorACKCode>
+            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+            <rejectedACKCode>AR</rejectedACKCode>
+            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+            <msh15ACKAccept>false</msh15ACKAccept>
+            <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+          </responseGenerationProperties>
+          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="4.3.0">
+            <successfulACKCode>AA,CA</successfulACKCode>
+            <errorACKCode>AE,CE</errorACKCode>
+            <rejectedACKCode>AR,CR</rejectedACKCode>
+            <validateMessageControlId>true</validateMessageControlId>
+            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+            <originalIdMapVariable></originalIdMapVariable>
+          </responseValidationProperties>
+        </outboundProperties>
+      </responseTransformer>
+      <filter version="4.3.0">
+        <elements>
+          <com.mirth.connect.plugins.rulebuilder.RuleBuilderRule version="4.3.0">
+            <name>Accept message if &quot;msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString()&quot; exists</name>
+            <sequenceNumber>0</sequenceNumber>
+            <enabled>true</enabled>
+            <field>msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString()</field>
+            <condition>EXISTS</condition>
+            <values>
+              <string>apple</string>
+            </values>
+          </com.mirth.connect.plugins.rulebuilder.RuleBuilderRule>
+          <com.mirth.connect.plugins.rulebuilder.RuleBuilderRule version="4.3.0">
+            <name>Accept message if &quot;msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()&quot; equals &quot;apple&quot;</name>
+            <sequenceNumber>1</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <field>msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()</field>
+            <condition>EQUALS</condition>
+            <values>
+              <string>&quot;apple&quot;</string>
+            </values>
+          </com.mirth.connect.plugins.rulebuilder.RuleBuilderRule>
+          <com.mirth.connect.plugins.rulebuilder.RuleBuilderRule version="4.3.0">
+            <name>Accept message if &quot;msg[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;].toString()&quot; contains &quot;ball&quot; or &quot;cat&quot; or &quot;dog&quot; or &quot;eagle&quot;</name>
+            <sequenceNumber>2</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <field>msg[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;].toString()</field>
+            <condition>CONTAINS</condition>
+            <values>
+              <string>&quot;ball&quot;</string>
+              <string>&quot;cat&quot;</string>
+              <string>&quot;dog&quot;</string>
+              <string>&quot;eagle&quot;</string>
+            </values>
+          </com.mirth.connect.plugins.rulebuilder.RuleBuilderRule>
+          <com.mirth.connect.plugins.rulebuilder.RuleBuilderRule version="4.3.0">
+            <name>Accept message if &quot;msg[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;].toString()&quot; does not contain &quot;training&quot;</name>
+            <sequenceNumber>3</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <field>msg[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;].toString()</field>
+            <condition>NOT_CONTAIN</condition>
+            <values>
+              <string>&quot;training&quot;</string>
+            </values>
+          </com.mirth.connect.plugins.rulebuilder.RuleBuilderRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Accept msg only if pid 5 values is there else filter out the message</name>
+            <sequenceNumber>4</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>if (msg[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;].length()&gt;0)
+
+{return true} // it should pass
+
+
+else
+
+{return false} // it should get filtered out</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Check if the values xxxx  matches in PID 19</name>
+            <sequenceNumber>5</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>var valueToCheck = &apos;123&apos;; // checking for this value
+
+
+for each (var segment in msg[&apos;PID&apos;]) {
+    if (segment[&apos;PID.19&apos;][&apos;PID.19.1&apos;].toString() === valueToCheck) {
+        // The value is present in the PID-19 field
+        return true;
+    }
+}
+// The value is not found in any of the PID segments or PID-19 fields
+return false;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Check if OBX segment exists and contains a specific value in OBX-5:</name>
+            <sequenceNumber>6</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>//Check if OBX segment exists and contains a specific value in OBX-5:
+
+
+if (msg[&apos;OBX&apos;].length() &gt; 0) {
+    for each (var obxSegment in msg[&apos;OBX&apos;]) {
+        if (obxSegment[&apos;OBX.5&apos;][&apos;OBX.5.1&apos;].toString() === &apos;result&apos;) {
+            // The OBX segment exists and OBX-5 contains &apos;Result&apos;
+            return true;
+        }
+    }
+}
+// The OBX segment does not exist or OBX-5 does not contain &apos;Result&apos;
+return false;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Check if OBX segment exists and contains a specific value in OBX-5: in multiple iterations</name>
+            <sequenceNumber>7</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>// Check if any iteration of OBX-5.1 field contains the value &quot;result&quot;
+var obxSegments = msg[&apos;OBX&apos;];
+if (obxSegments.length() &gt; 0) {
+    for each (var obxSegment in obxSegments) {
+        var obx5Values = obxSegment[&apos;OBX.5&apos;];
+        for each (var obx5Value in obx5Values) {
+            if (obx5Value[&apos;OBX.5.1&apos;].toString() === &apos;result&apos;) {
+                // The OBX segment exists and OBX-5.1 contains &apos;result&apos;
+                return true;
+            }
+        }
+    }
+}
+// The OBX segment does not exist or no OBX-5.1 value contains &apos;result&apos;
+return false;R</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Validate if a numeric value in PV1-2 is within a specific range:</name>
+            <sequenceNumber>8</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>//Validate if a numeric value in PV1-2 is within a specific range:
+
+
+var pv1_2Value = parseInt(msg[&apos;S1&apos;].toString(), 10);
+var minValue = 1;
+var maxValue = 1000;
+
+if (!isNaN(pv1_2Value) &amp;&amp; pv1_2Value &gt;= minValue &amp;&amp; pv1_2Value &lt;= maxValue) {
+    // The PV1-2 value is within the valid range
+    return true;
+}
+// The PV1-2 value is outside the valid range or not a number
+return false;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Check if a specific segment is present (e.g., AL1 segment):</name>
+            <sequenceNumber>9</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>//Check if a specific segment is present (e.g., AL1 segment):
+
+if (msg[&apos;AL1&apos;].length() &gt; 0) {
+    // The AL1 segment exists
+    return true;
+}
+// The AL1 segment does not exist
+return false;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Perform a regex pattern match on a specific field value:</name>
+            <sequenceNumber>10</sequenceNumber>
+            <enabled>false</enabled>
+            <operator>AND</operator>
+            <script>//Perform a regex pattern match on a specific field value in EVN1 ( event type code)
+//
+//Regex:        /^[A-Z]{3}\d{3}$/
+//
+//• ^ asserts the start of the string.
+//• [A-Z]{3} matches exactly three uppercase letters from A to Z.
+//• \d{3} matches exactly three digits (0-9).
+//$ asserts the end of the string.
+
+
+
+
+
+var regexPattern = /^[A-Z]{3}\d{3}$/;
+var fieldValue = msg[&apos;EVN&apos;][&apos;EVN.1&apos;][&apos;EVN.1.1&apos;].toString();
+
+if (regexPattern.test(fieldValue)) {
+    // The EVN 1 field value matches the specified regex pattern
+    return true;
+}
+
+// The EVN 1  field value does not match the specified regex pattern
+return false;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+          <com.mirth.connect.plugins.javascriptrule.JavaScriptRule version="4.3.0">
+            <name>Validate if multiple fields in the PV1 segment are equal to specific values:</name>
+            <sequenceNumber>11</sequenceNumber>
+            <enabled>true</enabled>
+            <operator>AND</operator>
+            <script>var expectedValues = {
+//    &apos;PID.5&apos;: [&apos;John&apos;, &apos;Doe&apos;],
+    &apos;PID.18&apos;: [&apos;Male&apos;],
+    &apos;PID.19&apos;: [&apos;Single&apos;]
+};
+
+for (var field in expectedValues) {
+    var fieldValues = msg[&apos;PID&apos;][field];
+    var expectedFieldValues = expectedValues[field];
+
+    if (!Array.isArray(fieldValues)) {
+        fieldValues = [fieldValues];
+    }
+
+    var match = fieldValues.every(function(value) {
+        return expectedFieldValues.includes(value.toString());
+    });
+
+    if (!match) {
+        // At least one PID field does not match the expected values
+        return false;
+    }
+}
+
+// All PID fields match the expected values
+return true;
+
+
+//
+//var expectedValues = {
+//    &apos;PV1.3&apos;: &apos;IP&apos;,
+//    &apos;PV1.7&apos;: &apos;Admit&apos;,
+//    &apos;PV1.8&apos;: &apos;Inpatient&apos;
+//};
+//
+//for (var field in expectedValues) {
+//    if (msg[&apos;PV1&apos;][field].toString() !== expectedValues[field]) {
+//        // At least one PV1 field does not match the expected value
+//        return false;
+//    }
+//}
+//
+//// All PV1 fields match the expected values
+//return true;</script>
+          </com.mirth.connect.plugins.javascriptrule.JavaScriptRule>
+        </elements>
+      </filter>
+      <transportName>TCP Sender</transportName>
+      <mode>DESTINATION</mode>
+      <enabled>true</enabled>
+      <waitForPrevious>true</waitForPrevious>
+    </connector>
+  </destinationConnectors>
+  <preprocessingScript>// Modify the message variable below to pre process data
+return message;</preprocessingScript>
+  <postprocessingScript>// This script executes once after a message has been processed
+// Responses returned from here will be stored as &quot;Postprocessor&quot; in the response map
+return;</postprocessingScript>
+  <deployScript>// This script executes once when the channel is deployed
+// You only have access to the globalMap and globalChannelMap here to persist data
+return;</deployScript>
+  <undeployScript>// This script executes once when the channel is undeployed
+// You only have access to the globalMap and globalChannelMap here to persist data
+return;</undeployScript>
+  <properties version="4.3.0">
+    <clearGlobalChannelMap>true</clearGlobalChannelMap>
+    <messageStorageMode>PRODUCTION</messageStorageMode>
+    <encryptData>false</encryptData>
+    <encryptAttachments>false</encryptAttachments>
+    <encryptCustomMetaData>false</encryptCustomMetaData>
+    <removeContentOnCompletion>false</removeContentOnCompletion>
+    <removeOnlyFilteredOnCompletion>false</removeOnlyFilteredOnCompletion>
+    <removeAttachmentsOnCompletion>false</removeAttachmentsOnCompletion>
+    <initialState>STARTED</initialState>
+    <storeAttachments>false</storeAttachments>
+    <metaDataColumns>
+      <metaDataColumn>
+        <name>SOURCE</name>
+        <type>STRING</type>
+        <mappingName>mirth_source</mappingName>
+      </metaDataColumn>
+      <metaDataColumn>
+        <name>TYPE</name>
+        <type>STRING</type>
+        <mappingName>mirth_type</mappingName>
+      </metaDataColumn>
+    </metaDataColumns>
+    <attachmentProperties version="4.3.0">
+      <type>None</type>
+      <properties/>
+    </attachmentProperties>
+    <resourceIds class="linked-hash-map">
+      <entry>
+        <string>Default Resource</string>
+        <string>[Default Resource]</string>
+      </entry>
+    </resourceIds>
+  </properties>
+  <exportData>
+    <metadata>
+      <enabled>true</enabled>
+      <lastModified>
+        <time>1687465490656</time>
+        <timezone>America/New_York</timezone>
+      </lastModified>
+      <pruningSettings>
+        <archiveEnabled>true</archiveEnabled>
+        <pruneErroredMessages>false</pruneErroredMessages>
+      </pruningSettings>
+      <userId>1</userId>
+    </metadata>
+    <codeTemplateLibraries>
+      <codeTemplateLibrary version="4.3.0">
+        <id>9cacee39-7b65-4b87-90d1-f8737be8857f</id>
+        <name>Library 1</name>
+        <revision>2</revision>
+        <lastModified>
+          <time>1684267851333</time>
+          <timezone>America/New_York</timezone>
+        </lastModified>
+        <description></description>
+        <includeNewChannels>true</includeNewChannels>
+        <enabledChannelIds>
+          <string>648ae925-38a7-4773-aa16-b042366cb235</string>
+          <string>204adb8e-aa2a-42de-bd27-fbe98ba000f4</string>
+          <string>9482e66d-5fff-492c-b9bf-1425c4dcd434</string>
+          <string>06d19851-fbd2-446b-be8f-12965d966d2a</string>
+          <string>4e16cb70-41e9-4783-9f89-f2fd0573fe44</string>
+          <string>b1189637-81c5-4db2-b5c9-f88f14d2d53a</string>
+          <string>0c1c8aee-7d5a-4dcb-b59b-0e040656fb93</string>
+          <string>6e071482-c0f7-47cb-afff-4eed15d4ac7f</string>
+          <string>1f4896e2-b5c5-4290-8568-880bce245d6f</string>
+          <string>8a0212f3-613a-47b6-9f07-d22833f1c825</string>
+          <string>5b633639-6074-4cef-8b4f-4a90365c27e9</string>
+          <string>9ba5ddfa-acde-438e-871a-5b6be9b97c46</string>
+          <string>5b5beda4-1d0e-43be-946b-a79f96f679a7</string>
+          <string>f41de5dc-a2bb-4e63-b145-cdae036f505d</string>
+          <string>de2f357b-f996-404d-8b5f-9df149d5a9d2</string>
+          <string>5a7aef1d-144d-4a93-a07f-1696c0cf6541</string>
+          <string>baf948eb-a3c6-4eec-9c9e-d21f685d9590</string>
+          <string>113ce5fc-6492-4ca0-879a-6f6bcec22c37</string>
+          <string>3483b01b-121a-4b66-81b6-4039c84a5aa5</string>
+          <string>f108b1d6-645d-4a91-9819-92aa1d6053d1</string>
+          <string>571ce43e-8ed7-4ab3-9048-6eb75bdab460</string>
+          <string>63eb39f6-4f36-4093-a64e-b0d60bd0e710</string>
+          <string>23e4a345-f865-4595-8319-647e3f4d5d91</string>
+          <string>8b933138-dca6-4001-baf9-60af72dc621d</string>
+          <string>13ec86d1-d91d-49de-a90a-0ac369484dd3</string>
+          <string>5b701e02-ee54-4671-ba5b-0acfc1953e14</string>
+          <string>b475f040-582d-4c47-9998-c7c5fc3d4cda</string>
+          <string>61756fae-00ed-4ea1-ac17-e6602f867332</string>
+          <string>a9b80bb0-1b7a-445b-b7fd-d5726c464318</string>
+          <string>55f14e2d-fdd5-4d4f-86bc-8c9d790eb2ee</string>
+          <string>18247b6b-7a37-417d-a9a0-da0eeb685474</string>
+          <string>a5c51c51-09d4-4636-8fe7-7cfaa3a0cbd0</string>
+          <string>7ed29a6c-4ed7-416f-9b87-e0010ed2a1ad</string>
+          <string>2ab27720-491f-4f97-9201-2187b5767b9c</string>
+          <string>a3978500-3f25-490f-b581-db9dd5cad0c1</string>
+          <string>ab250ae5-b2e9-41e8-bf3a-3dcf4cb89064</string>
+          <string>0ba97df6-c2b9-43f0-a7cd-001bc3f52f12</string>
+          <string>6aba22bb-140b-49d0-a4a9-07d2e683fcf8</string>
+          <string>1aca8dfa-0577-4966-8566-48346f4ba03d</string>
+          <string>61e2730a-92da-4371-b470-c72c05eb4bec</string>
+          <string>d4778960-0732-4090-8357-d10cb06fbf6c</string>
+          <string>4d2e6b44-3935-4a29-a289-209cf66ace93</string>
+          <string>9db08242-b163-4d82-aae7-c514bfba3629</string>
+          <string>31950c60-aa93-4e22-97e0-e62817a5098b</string>
+          <string>e21b3364-5fe1-4fdd-81cb-f81593651fcb</string>
+          <string>3f5ab859-f917-484f-b841-7c9e39174b8e</string>
+          <string>4bdb6f50-333b-4e5b-9019-db1f38b95eca</string>
+          <string>1ce2ac4d-d47b-42f8-818f-35792471be06</string>
+          <string>835d1e8f-2958-4797-80e7-6a8cd72392ea</string>
+          <string>72958386-d2ff-45d4-920f-95c0bb9e32ff</string>
+          <string>7d0d4a6c-e142-4e5a-afd3-99bfceafa37b</string>
+          <string>99416284-a5be-4d63-b90c-98683843f956</string>
+          <string>a5ac35e3-4776-4669-8603-92be7acdb167</string>
+          <string>b2ba2719-6b6b-413a-8531-bb9fc2813201</string>
+          <string>5eddd05a-fc90-4251-b0ef-7ff758868c4b</string>
+          <string>0a13d3c3-e0fb-48e9-92f2-96b55cd95144</string>
+          <string>d6ac129b-9a2f-4507-8f1a-7dd4a01883ce</string>
+          <string>1ee244f8-4aaf-4226-9f26-5091dc3090cd</string>
+          <string>46a35e7a-1a05-4750-bc48-030a3f49a1da</string>
+          <string>8e4b5aef-db67-4ab5-89c2-c62e612d77a7</string>
+          <string>296b581f-de7c-4d5c-8015-9a971d52bc7d</string>
+          <string>a18d0ca0-6d4d-45f1-87ae-91b8269d2fc7</string>
+          <string>1438cc96-6d28-4e6d-aa49-127fefe69ba4</string>
+          <string>4f83b379-d1ad-48cb-aa1f-07711ed6e3b5</string>
+          <string>f47ad0d1-6874-44cf-a1c7-9c6d62accbd0</string>
+          <string>f000a6b5-3a61-4a6c-9a2a-07202e23d4e3</string>
+          <string>3af4a274-6ed8-4d68-8ec4-98b0071e0e71</string>
+          <string>55f485c0-77a0-4fbb-8e1a-f94c1d5952ad</string>
+          <string>ccdc00d5-a6cc-468b-b8d5-21362cfec7c2</string>
+          <string>c876617a-5432-48e8-b383-39cb12cea0ee</string>
+          <string>c1b8d16b-9cd2-4e39-9bad-cbb00462140d</string>
+          <string>96004501-2843-4fe6-8d9f-a966a88172fd</string>
+          <string>07bfb1de-56b6-4ac0-8522-22078fac6b61</string>
+          <string>a1518f33-1943-4038-9696-af83ec533341</string>
+          <string>da3fbc70-20fc-4092-b898-9dbbaaf963c0</string>
+          <string>1d5f408b-1cc8-463d-b375-e040d2441165</string>
+          <string>46ee42a1-5d00-4d1e-95ec-34cc75190f49</string>
+          <string>d6bb3b95-6e2d-4089-a56d-719b5533ada5</string>
+          <string>43903467-129d-4962-9bd9-e4abe9a1692b</string>
+          <string>741b9f11-6ee3-4473-8224-a7a5f6645f82</string>
+          <string>3ba9cc6b-707a-4275-81f2-e4ebe106ac42</string>
+          <string>d5c75882-2ed3-40a6-95e8-1b8687616298</string>
+          <string>5029634b-453e-4cd5-9d8b-39d1c4f4171f</string>
+          <string>e912745a-0782-45f7-b880-8f41259f0911</string>
+          <string>a7820593-774e-4594-b460-17d9019e2a5a</string>
+          <string>0407c5dc-33aa-4de3-ba92-44ab436a578e</string>
+          <string>a3dada07-5175-49bb-9ca3-66435c704bdf</string>
+          <string>8c58d381-904a-4c1a-8894-85a645766a78</string>
+          <string>eea2cbb8-7fc3-4745-982c-4b4d6e0bf042</string>
+          <string>f59cd24e-78d3-44a0-9e33-42b805f1deba</string>
+          <string>66830c8c-83e2-4811-a35f-cfaeac736b0e</string>
+          <string>b48f9688-8da6-4a42-99ee-0c67602e5959</string>
+          <string>c165e9ba-eb7c-4058-9193-f6879efc0850</string>
+          <string>60caccd3-5855-46bd-a5f3-40d42c8b1b16</string>
+          <string>7170076a-ad07-4ae7-8e41-0b99af162cd3</string>
+          <string>a335b556-bbb9-4b4f-94e7-d60a196b437d</string>
+          <string>2746248f-0bf9-44a3-85c9-2683133a6cff</string>
+          <string>d0ed7510-90c0-48ad-b9fc-eb2392c274a6</string>
+          <string>2ffb43e9-d5ca-4afc-9c18-b7f4cc9b2eb3</string>
+        </enabledChannelIds>
+        <disabledChannelIds>
+          <string>ba20cbc8-2627-41de-8ac5-e891b238b0e4</string>
+        </disabledChannelIds>
+        <codeTemplates>
+          <codeTemplate version="4.3.0">
+            <id>e77e8c81-e2ec-4d4a-9f76-cd035b3f9923</id>
+            <name>arrayIsIn2D</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768595</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Searches for string in a 2d array.
+
+	@array is the array you want to search
+	@str is the string you want to check if it exists
+	@order is the order of the string in the internal arrays
+	@return {Int} return the index number
+*/
+function arrayIsIn2D(str,order,array){
+	for (var i = 0; i &lt;array.length; i++) {
+		if (array[i][order] == str) return i;
+	}
+	return -1;
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>6c41e1e7-7bb2-4d03-a04d-7638dbeddc1b</id>
+            <name>channel_status</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768325</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Purpose: To determine the current state of a channel.
+
+	Sometimes, you need to know the status of a certain channel, from within another channel. To accomplish this, you can use the following to see if the channel is :
+		-STARTED
+		-STOPPED
+		-PAUSED
+		-NA (Non-available)
+
+	@param {String} channel_id - arg1 description
+	@return {String} return description
+*/
+function GetChannelState(channel_id) {
+
+    var channel_status = &quot;NA&quot;;
+
+    var channel_count = parseInt(Packages.com.webreach.mirth.server.controllers.ChannelStatusController.getInstance().getChannelStatusList().size());
+
+    for(var i=0;i&lt;channel_count;i++) {
+        if (channel_id == Packages.com.webreach.mirth.server.controllers.ChannelStatusController.getInstance().getChannelStatusList().get(i).getChannelId()) {
+            channel_status = Packages.com.webreach.mirth.server.controllers.ChannelStatusController.getInstance().getChannelStatusList().get(i).getState();
+        }
+    }
+
+    return channel_status;
+
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>e31ef05e-7cd5-43d2-a2db-b264ed98c003</id>
+            <name>Convert Date From Multiple Formats</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768502</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                <contextType>CHANNEL_ATTACHMENT</contextType>
+                <contextType>GLOBAL_DEPLOY</contextType>
+                <contextType>GLOBAL_UNDEPLOY</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>CHANNEL_DEPLOY</contextType>
+                <contextType>CHANNEL_PREPROCESSOR</contextType>
+                <contextType>CHANNEL_BATCH</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+                <contextType>CHANNEL_UNDEPLOY</contextType>
+                <contextType>GLOBAL_PREPROCESSOR</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Parses a date (String, Date, DateTime, or Number) into a string using an array of possible input
+	patterns and the specified output pattern.
+
+	convertDate: Parses a date (String, Date, DateTime, or Number) into a string using an array of possible input patterns and the specified output pattern.
+
+	This is useful if you want to convert/standardize an incoming date, but you don&apos;t know how it will be formatted. The code comes with an array of possible patterns, and if there is a pattern you encounter that isn&apos;t handled, you can simply add it to the list.
+
+	Parameters:
+	date: The object to convert. The object may be a String, Date, DateTime, or Number (or really any object, as long as its string representation is some formatted date).
+	outpattern: The pattern to use when converting the date to the output string.
+
+	Example:
+	Standardize the message date/time to a specific pattern, no matter what pattern it comes in as:
+	Code:
+	msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;] = convertDate(msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;].toString(), &apos;yyyyMMddHHmmss&apos;);
+*/
+var patterns = [
+	&apos;yyyy-MM-dd HH:mm:ss:SSS&apos;,
+	&apos;yyyy-MM-dd HH:mm:ss.SSS&apos;,
+	&apos;yyyy-MM-dd HH:mm:ss&apos;,
+	&apos;yyyy-MM-dd HH:mm&apos;,
+	&apos;EEE MMM dd HH:mm:ss:SSS zzz yyyy&apos;,
+	&apos;EEE MMM dd HH:mm:ss.SSS zzz yyyy&apos;,
+	&apos;EEE MMM dd HH:mm:ss zzz yyyy&apos;,
+	&apos;EEE MMM dd zzz yyyy&apos;,
+	&apos;dd-MMM-yyyy HH:mm:ss:SSS&apos;,
+	&apos;dd-MMM-yyyy HH:mm:ss.SSS&apos;,
+	&apos;dd-MMM-yyyy HH:mm:ss&apos;,
+	&apos;yyyy-MM-dd&apos;,
+	&apos;yyyy MM dd&apos;,
+	&apos;yyyy.MM.dd&apos;,
+	&apos;MM-dd-yyyy&apos;,
+	&apos;MM dd yyyy&apos;,
+	&apos;MM.dd.yyyy&apos;,
+	&apos;HH:mm:ss:SSS&apos;,
+	&apos;HH:mm:ss.SSS&apos;,
+	&apos;HH:mm:ss&apos;,
+	&apos;yyyyMMddHHmmssSSS&apos;,
+	&apos;yyyyMMddHHmmss&apos;,
+	&apos;yyyyMMddHHmm&apos;,
+	&apos;hh:mm aa&apos;];
+
+var formatters = [];
+for each (pattern in patterns) {
+	formatters.push(org.joda.time.format.DateTimeFormat.forPattern(pattern));
+}
+
+function convertDate(date, outpattern) {
+	var instant = 0;
+	if (typeof date == &apos;number&apos; || date instanceof java.lang.Number)
+		instant = new Number(date);
+	else if (date instanceof Date || date instanceof java.util.Date)
+		instant = date.getTime();
+	else if (date instanceof org.joda.time.ReadableInstant)
+		instant = date.getMillis();
+	else {
+		for each (formatter in formatters) {
+			try {
+				instant = formatter.parseMillis(new String(date));
+				break;
+			} catch(e) {}
+		}
+	}
+
+	return org.joda.time.format.DateTimeFormat.forPattern(outpattern).print(instant);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>3b837d7a-b3e0-4728-a6d1-f4a57ea4d001</id>
+            <name>createSegmentBefore</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768563</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Modify the description here. Modify the function name and parameters as needed. One function per
+	template is recommended; create a new code template for each new function.
+
+	@param {String} insertSegmentName - description
+	@param {String} beforeThisSegment - description
+	@return {String} return description
+*/
+function createSegmentBefore(insertSegmentName, beforeThisSegment) {
+	var msgObj = beforeThisSegment;
+	while (msgObj.parent() != undefined) {
+		msgObj = msgObj.parent();
+	}
+	msgObj.insertChildBefore(beforeThisSegment[0], new XML(&apos;&lt;&apos; + insertSegmentName + &apos;&gt;&lt;/&apos; + insertSegmentName + &apos;&gt;&apos;));
+	return msgObj.child(beforeThisSegment[0].childIndex() - 1);
+}
+</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>cef5c36d-fd45-49d1-802d-a7744be83020</id>
+            <name>del_seg</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768772</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	This function will clean up the source message to include only the specific downstream system.
+
+	@param {String} type - vendor specific inteface:
+		HS-ORM - Computrition Diet Order messages
+*/
+function del_seg(type,logLevel) {
+	if (!logLevel) logLevel=0;
+	if (type==&quot;HS-ORM&quot;) {
+		for each (seg in msg.children()) {&#xd;
+			if (seg.name().toString() != &quot;MSH&quot; &amp;&amp;&#xd;
+			    seg.name().toString() != &quot;PID&quot; &amp;&amp;&#xd;
+			    seg.name().toString() != &quot;AL1&quot; &amp;&amp;&#xd;
+			    seg.name().toString() != &quot;ORC&quot; &amp;&amp;&#xd;
+			    seg.name().toString() != &quot;ODS&quot; &amp;&amp;&#xd;
+			    seg.name().toString() != &quot;OBX&quot;) {&#xd;
+				var segment = seg.name().toString();&#xd;
+writeLog(logLevel,type+&apos;:&apos;+$(&apos;mirth_type&apos;)+&apos;:deleting segment:&apos;+segment);&#xd;
+				delete msg[segment];&#xd;
+			}&#xd;
+		}
+	}&#xd;
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>35b42c67-1ae4-4ee7-a583-afd857a2ab47</id>
+            <name>deserialize_message</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768626</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Deserializes an E4X XML node into HL7 v2.x. This allows you to pass any E4X node
+	of a message and convert it into HL7 v2.x correctly.
+
+	source: http://www.mirthcorp.com/community/forums/showthread.php?t=6902
+
+	Deserialize the entire message:
+		logger.info(xmlToHL7(msg));
+	Deserialize just the PID segment:
+		logger.info(xmlToHL7(msg.PID));
+	Deserialize just the PID.3 segment (even if there are repetitions):
+		logger.info(xmlToHL7(msg.PID[&apos;PID.3&apos;]));
+
+	@param {String} node - node name
+	@param {String} fieldSeparator - fieldSeparator
+	@param {String} componentSeparator - componentSeparator
+	@param {String} repetitionMarker - repetitionMarker
+	@param {String} subcomponentSeparator - subcomponentSeparator
+	@return {String} return message hl7 format
+*/
+function xmlToHL7(node,fieldSeparator,componentSeparator,repetitionMarker,subcomponentSeparator) {
+	// Data validation
+	if (!node) return &apos;&apos;;
+	// This shouldn&apos;t really ever happen with E4X anyway, but just in case.
+	String.prototype.replaceAmp = function() {return this.replace(/&amp;amp;/g,&apos;&amp;&apos;);};
+	// If we&apos;re just dealing with a simple node, then just return its contents.
+	if (node.hasSimpleContent()) return node.toString().replaceAmp();
+	// Used for StringUtils
+	importPackage(org.apache.commons.lang);
+	
+	// Defaults to standard HL7 encoding characters
+	var fs = fieldSeparator || &apos;|&apos;;
+	var cs = componentSeparator || &apos;^&apos;;
+	var rm = repetitionMarker || &apos;~&apos;;
+	var ss = subcomponentSeparator || &apos;&amp;&apos;;
+	var cr = &apos;\x0D&apos;;
+
+	// What will actually be returned
+	var output = &apos;&apos;;
+	// Get the XML name of the node (in the case of an XMLList of repeating fields, the first one will be returned, since they all have the same name anyway)
+	var qname = node[0].name().toString();
+	// Use the HL7 dot notation to find what level we&apos;re at
+	var level = StringUtils.countMatches(qname,&apos;.&apos;);
+
+	// If the name is HL7Message, we&apos;re at the root node
+	if (qname == &apos;HL7Message&apos;)
+		// Recursively append serialization for each segment
+		for each (segment in node.children())
+			output += xmlToHL7(segment,fs,cs,rm,ss);
+
+	// If we&apos;re at the segment level
+	else if (level == 0) {
+		// If the node is an XMLList of multiple segments
+		if (node.length() &gt; 1) {
+			// Recursively append serialization for each segment
+			for each (segment in node)
+				output += xmlToHL7(segment,fs,cs,rm,ss);
+		}
+		else {
+			// Add the segment name to the output
+			output += qname;
+			// Initialize name placeholder
+			var prevName = &apos;&apos;;
+			// Iterate through each field in the segment
+			for each (field in node.children()) {
+				// Get the QName of the field
+				var fieldName = field.name().toString();
+				// If we&apos;re dealing with the special cases of MSH.1/2, then just add the field contents
+				if (fieldName in {&apos;MSH.1&apos;:1,&apos;MSH.2&apos;:1})
+					output += field.toString().replaceAmp();
+				// Otherwise add the recursive serialization of the field
+				else
+					// If we&apos;re on a field repetition, then prepend a repetition marker, otherwise prepend a field separator
+					output += (prevName==fieldName?rm:fs) + xmlToHL7(field,fs,cs,rm,ss);
+				// Update the field name placeholder
+				prevName = fieldName;
+			}
+			// Add a carriage return to the end of the segment
+			output += cr;
+		}
+	}
+
+	// If we&apos;re at the field level
+	else if (level == 1) {
+		// If the node is an XMLList of multiple fields
+		if (node.length() &gt; 1) {
+			// Recursively append serialization for each field
+			for each (field in node)
+				output += xmlToHL7(field,fs,cs,rm,ss) + rm;
+			// Remove the final repetition marker
+			output = StringUtils.chomp(output,rm);
+		}
+		else {
+			// Recursively append serialization for each component
+			for each (component in node.children())
+				// Append a component separator to the end
+				output += xmlToHL7(component,fs,cs,rm,ss) + cs;
+			// Remove the last component separator
+			output = StringUtils.chomp(output,cs);
+		}
+	}
+
+	// If we&apos;re at the component level
+	else if (level == 2) {
+		// Recursively append serialization for each subcomponent
+		for each (subcomponent in node.children())
+			// Append a subcomponent separator to the end
+			output += xmlToHL7(subcomponent,fs,cs,rm,ss) + ss;
+		// Remove the last subcomponent separator
+		output = StringUtils.chomp(output,ss);
+	}
+
+	// If we&apos;re at the subcomponent level
+	else
+		// Just add the contents of the node
+		output = node.toString().replaceAmp();
+
+	// Return the final output
+	return output;
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>fd84a2f5-fba3-42bb-a6a6-7ae8d03f0974</id>
+            <name>getSegmentsAfter</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768707</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Author: Nick Rupley
+	Date Modified: 2/13/2013
+	getSegmentsAfter: Returns an array of segments with the specified name that come after a given segment in the message.
+
+	@param {String} {Required} root:			The root HL7Message node of the message, or the parent of the segment node.
+	@param {String} {Required} startSeg:		The segment AFTER which to start collecting segments.
+	@param {String} {Required} segName:		The name (String or RegExp) of the segments you want to collect.
+
+	@param {String} {Optional} consecutiveInd:	If true, indicates that the segments are expected to come directly after startSeg. 
+					If false, segments are collected until another segment with the same name as startSeg is encountered.
+					Defaults to false.
+	@param {String} {Optional} stopSegNames:	An array of segment names that, when encountered, stop the collection of segments.
+*/
+
+function getSegmentsAfter(root, startSeg, segName, consecutiveInd, stopSegNames) {
+	function test(str) {
+		return segName instanceof RegExp ? segName.test(str) : segName === str;
+	}
+
+	// The index to start collection is the next one up from the starting segment
+	var index = startSeg.childIndex()+1;
+	// The return array
+	var out = [];
+	// Boolean placeholder to stop iteration
+	var done = false;
+	// Object that will contain all of the stopSegNames strings, bound to a truthy value (1)
+	var stopNames = {};
+	// Indicates whether we have any stop segments
+	var stopNamesInd = false;
+	// If stopSegNames is defined
+	if (stopSegNames !== undefined &amp;&amp; stopSegNames !== null) {
+		// Set our indicator to true
+		stopNamesInd = true;
+		// Add each string in the array to our object
+		for each (name in stopSegNames)
+			stopNames[name] = 1;
+	}
+
+	// Iterate through each child in the root, starting at the segment after startSeg, and
+	// ending at the final segment, or when the done flag is set to true.
+	while (index &lt; root.children().length() &amp;&amp; !done) {
+		// If a stop segment is encountered, stop iteration
+		if (stopNamesInd &amp;&amp; root.children()[index].name().toString() in stopNames)
+			done = true;
+		// If a segment with the same name as startSeg is encountered, stop iteration
+		else if (root.children()[index].name().toString() == startSeg.name().toString() &amp;&amp; !consecutiveInd)
+			done = true;
+		// If we&apos;re only collecting consecutive segments and we encounter a segment with a name other than segName, stop iteration
+		else if (!test(root.children()[index].name().toString()) &amp;&amp; consecutiveInd)
+			done = true;
+		// If all previous tests passed, and the current segment has a name of segName, then add it to our array
+		else if (test(root.children()[index].name().toString()))
+			out.push(root.children()[index]);
+		// Increment our index counter
+		index++;
+	}
+
+	// Return the output array
+	return out;
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>414a7240-8be4-40e8-b010-aef6b21fe5f0</id>
+            <name>insertSegmentAfter</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768434</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Modify the description here. Modify the function name and parameters as needed. One function per
+	template is recommended; create a new code template for each new function.
+
+	@param {String} insertSegment - description
+	@param {String} afterThisSegment - description
+	@return {String} return description
+*/
+function insertSegmentAfter(insertSegment, afterThisSegment) {
+	var msgObj = afterThisSegment;
+	while (msgObj.parent() != undefined) {
+		msgObj = msgObj.parent();
+	}
+	msgObj.insertChildAfter(afterThisSegment[0], insertSegment);
+	return msgObj.child(afterThisSegment[0].childIndex() + 1);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>c580f8ef-d4e9-4740-bf7d-524662b5acb6</id>
+            <name>insertSegmentBefore</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768462</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Modify the description here. Modify the function name and parameters as needed. One function per
+	template is recommended; create a new code template for each new function.
+
+	@param {String} insertSegment - description
+	@param {String} beforeThisSegment - description
+	@return {String} return description
+*/
+function insertSegmentBefore(insertSegment, beforeThisSegment) {
+	var msgObj = beforeThisSegment;
+	while (msgObj.parent() != undefined) {
+		msgObj = msgObj.parent();
+	}
+	msgObj.insertChildBefore(beforeThisSegment[0], insertSegment);
+	return msgObj.child(beforeThisSegment[0].childIndex() - 1);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>d26b608b-6329-41a5-b3b1-97f43eee4be3</id>
+            <name>ltrim</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768398</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Left trims a string.
+
+	@param {String} str - string to process
+	@return {String} return description
+*/
+function ltrim(str) {
+    return new String(str).replace(/^\s+/,&quot;&quot;);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>a9e61c41-5b0c-47da-82c9-0601ad5a3baa</id>
+            <name>Overwrite Logger Categories</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768536</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                <contextType>CHANNEL_ATTACHMENT</contextType>
+                <contextType>GLOBAL_DEPLOY</contextType>
+                <contextType>GLOBAL_UNDEPLOY</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>CHANNEL_DEPLOY</contextType>
+                <contextType>CHANNEL_PREPROCESSOR</contextType>
+                <contextType>CHANNEL_BATCH</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+                <contextType>CHANNEL_UNDEPLOY</contextType>
+                <contextType>GLOBAL_PREPROCESSOR</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Overwrites the categories of Logger objects placed in JavaScript contexts.
+*/
+/* 
+ * NOTE: This will work automatically for all contexts except for
+ * the transformer. For transformers, you will need to manually
+ * include &quot;overwriteCategories();&quot; at the beginning of your first step.
+ 
+ overwriteCategories: Overwrites the categories of Logger objects placed in JavaScript contexts.
+
+ When you call &quot;logger.info(&apos;something&apos;);&quot; in a user-defined script, you&apos;ll see something like this in the server log:
+
+ Code:
+ [2014-01-23 08:36:32,862]  INFO  (transformer:?): something
+ In a recent thread, someone was asking whether it&apos;s possible to change the category (&quot;transformer&quot;) that shows up to something custom, without having to edit log4j.properties and restart the server. The answer is yes, it&apos;s definitely possible, and this code template can do that for you.
+
+ All you have to do is import the code template, redeploy your channels, and it&apos;ll start working, except for transformer scripts. Because of how we handle the filter/transformer, in order to get this to work in a transformer script you&apos;ll just have to add this line at the top of the first step in your transformer:
+
+ Code:
+ overwriteCategories();
+ Note that the above is only necessary for the regular transformer, not for response transformers, filters, deploy/shutdown/preprocessor/postprocessor scripts, Database/JavaScript connectors, or attachment/batch scripts.
+ */
+
+function overwriteCategories() {
+	logger = org.apache.log4j.Logger.getLogger({
+		&apos;transformer&apos;:		&apos;custom-transformer&apos;,
+		&apos;preprocessor&apos;:	&apos;custom-preprocessor&apos;,
+		&apos;postprocessor&apos;:	&apos;custom-postprocessor&apos;,
+		&apos;deploy&apos;:			&apos;custom-deploy&apos;,
+		&apos;shutdown&apos;:		&apos;custom-shutdown&apos;,
+		&apos;filter&apos;:			&apos;custom-filter&apos;,
+		&apos;db-connector&apos;:	&apos;custom-db-connector&apos;,
+		&apos;js-connector&apos;:	&apos;custom-js-connector&apos;,
+		&apos;attachment&apos;:		&apos;custom-attachment&apos;,
+		&apos;batch&apos;:			&apos;custom-batch&apos;,
+		&apos;response&apos;:		&apos;custom-response&apos;
+	}[logger.getName()]);
+	logger.setLevel(org.apache.log4j.Level.DEBUG);
+}
+
+overwriteCategories();</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>5b32258a-45fc-4970-bf57-81b8e002f05c</id>
+            <name>removeWhiteSpaceFromArray</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768663</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	This function will remove empty and white spaces from an array list.
+
+	@param {array} array - array
+	@return {String} return description
+*/
+function removeWhiteSpaceFromArray(array){
+	return array.filter(function(str) { return /\S/.test(str) });
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>c4ef99be-6845-4167-8a07-1e6c40b52bb3</id>
+            <name>Replace in All Descendant XML Nodes</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768822</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                <contextType>CHANNEL_ATTACHMENT</contextType>
+                <contextType>GLOBAL_DEPLOY</contextType>
+                <contextType>GLOBAL_UNDEPLOY</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>CHANNEL_DEPLOY</contextType>
+                <contextType>CHANNEL_PREPROCESSOR</contextType>
+                <contextType>CHANNEL_BATCH</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+                <contextType>CHANNEL_UNDEPLOY</contextType>
+                <contextType>GLOBAL_PREPROCESSOR</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Recursively iterates through all descendant nodes of an E4X XML object and makes a string
+	replacement.
+
+	This is useful if you want to make a global replacement in your message but only want to do it for a specific connector. Obviously you can do this in a preprocessor, but if you only want it to happen for a single destination, this function will allow you do to that easily.
+
+	Parameters:
+	parent: The node to recursively iterate through.
+	regexp: The regular expression to test against at each leaf (text) node. This should be a RegExp object, like &quot;new RegExp(&apos;foo&apos;,&apos;g&apos;)&quot; or &quot;/foo/g&quot;.
+	replacement: The string with which to replace.
+
+	Example:
+	- Replace all single quotes (&apos;) with two single quotes (&apos;&apos;), e.g. to prepare for inserting into a database:
+		replaceAllInXML(msg,/&apos;/g,&quot;&apos;&apos;&quot;);
+	- If any dates occur in a PID or OBR segment that do not have the hour/minute/second defined (i.e. it&apos;s only yyyyMMdd, like &quot;20130206&quot;), then add on the HHmmss (&quot;000000&quot;). This might be used to send to a system that requires those date fields to be in the full yyyyMMddHHmmss format.
+		for each (seg in msg.*.(function(){return/PID|OBR/.test((new XML(this)).name())}()))
+			replaceAllInXML(seg,/(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?!\d)/g,&apos;$&amp;000000&apos;);
+*/
+function replaceAllInXML(parent,regexp,replacement) {
+	for each (child in parent.children())
+		if (child.hasComplexContent())
+			replaceAllInXML(child,regexp,replacement);
+		else
+			parent.children()[child.childIndex()] = child.toString().replace(regexp,replacement);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>8c665edf-feb6-4bbe-a215-9d3c7c216bd2</id>
+            <name>rtrim</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768231</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Right trims a string.
+
+	@param {String} str - string to process
+	@return {String} return description
+*/
+function rtrim(str) {
+    return new String(str).replace(/\s+$/,&quot;&quot;);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>ffa5fa9b-e13e-48b1-96d5-b4f7ac08d497</id>
+            <name>Strip Empty Nodes from XML</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768798</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>GLOBAL_POSTPROCESSOR</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>CHANNEL_POSTPROCESSOR</contextType>
+                <contextType>CHANNEL_ATTACHMENT</contextType>
+                <contextType>GLOBAL_DEPLOY</contextType>
+                <contextType>GLOBAL_UNDEPLOY</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>CHANNEL_DEPLOY</contextType>
+                <contextType>CHANNEL_PREPROCESSOR</contextType>
+                <contextType>CHANNEL_BATCH</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+                <contextType>CHANNEL_UNDEPLOY</contextType>
+                <contextType>GLOBAL_PREPROCESSOR</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Recursively iterates through all descendant nodes of an E4X XML object and removes those that are
+	empty (or those whose children are all empty).
+
+	stripEmptyNodes: Recursively iterates through all descendant nodes of an E4X XML object and removes those that are empty (or those whose children are all empty).
+
+	Parameters:
+	node: The node to iterate through. If node itself is empty, it will not be removed from its parent.
+	stripWhitespaceNodes: If true, nodes that are not empty but only contain whitespace will also be removed.
+	onlyDeleteTrailing: If true, only trailing nodes will actually be deleted. For example if a child set has five nodes at the end which are all empty, all five will be removed. However if the same five nodes are followed by a node which isn&apos;t empty, then those five nodes will not be removed. Instead, the nodes will simply have their inner text elements removed (if necessary).
+
+	Examples:
+	Get rid of all empty nodes in the inbound XML structure (msg):
+	Code:
+	stripEmptyNodes(msg);
+	
+	Get rid of all blank (empty and whitespace-only) nodes in the inbound XML structure:
+	Code:
+	stripEmptyNodes(msg,true);
+	
+	Delete any trailing blank nodes, and replace any non-trailing whitespace-only nodes with empty nodes:
+	Code:
+	stripEmptyNodes(msg,true,true);
+*/
+function stripEmptyNodes(node, stripWhitespaceNodes, onlyDeleteTrailing) {
+	var nonEmptyFound = false;
+	for (var childIndex = node.children().length()-1; childIndex &gt;= 0; childIndex--) {
+		var child = node.children()[childIndex];
+		stripEmptyNodes(child,stripWhitespaceNodes,onlyDeleteTrailing);
+		if (stripWhitespaceNodes &amp;&amp; !child.toString().trim() || !stripWhitespaceNodes &amp;&amp; !child.toString())
+			if (!nonEmptyFound || !onlyDeleteTrailing)
+				delete node.children()[childIndex];
+			else
+				node.children()[childIndex] = new XML(&apos;&lt;&apos;+child.name().toString()+&apos;/&gt;&apos;);
+		else
+			nonEmptyFound = true;
+	}
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>2c244e40-eea9-41f0-a90e-0d42c189c2cd</id>
+            <name>Template 1</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768358</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	@param {String} array - what dt look for
+	@param {String} obj - where to look
+	@return {String} true if found, false if not found
+*/
+function arrayContains(array, obj) {
+    var i = array.length;
+    while (i--) {
+       if (array[i] === obj) {
+           return true;
+       }
+    }
+    return false;
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>4d8333b4-d3a1-40c8-b683-29114e4ff369</id>
+            <name>trim</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768729</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Trims a string.
+
+	@param {String} str - string to process
+	@return {String} return description
+*/
+function trim(str) {
+    return new String(str).replace(/^\s+|\s+$/g,&quot;&quot;);
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>22f35064-ccca-4157-8dcc-d4a0a42a25e0</id>
+            <name>wait</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768291</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	this function is used to pause the script for a time.
+
+	@param {String} ms - miliseconds
+*/
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end &lt; start + ms) {
+     end = new Date().getTime();
+  }
+}</code>
+            </properties>
+          </codeTemplate>
+          <codeTemplate version="4.3.0">
+            <id>0838234c-11cb-4366-a7b5-bedd736b307e</id>
+            <name>writeLog</name>
+            <revision>1</revision>
+            <lastModified>
+              <time>1683644768753</time>
+              <timezone>America/New_York</timezone>
+            </lastModified>
+            <contextSet>
+              <delegate>
+                <contextType>DESTINATION_FILTER_TRANSFORMER</contextType>
+                <contextType>SOURCE_FILTER_TRANSFORMER</contextType>
+                <contextType>DESTINATION_DISPATCHER</contextType>
+                <contextType>DESTINATION_RESPONSE_TRANSFORMER</contextType>
+                <contextType>SOURCE_RECEIVER</contextType>
+              </delegate>
+            </contextSet>
+            <properties class="com.mirth.connect.model.codetemplates.BasicCodeTemplateProperties">
+              <type>FUNCTION</type>
+              <code>/**
+	Logs info to log.
+
+	@param {String} level - debug level:
+		0 - errors only
+		1 - errors and info only
+		2 - debug info
+	@param {String} str - message
+	@param {String} err - error message
+	@return {String} return description
+*/
+function writeLog(level,str,err) {
+	if (!level) level=0;
+	if (!err) {
+		if (level!=0) {
+			if (level&lt;2) {
+				logger.info(channelName+&apos;|&apos;+connectorMessage.getMessageId()+&apos;|&apos;+str+&apos;|&apos;);
+			} else {
+				logger.debug(channelName+&apos;|&apos;+connectorMessage.getMessageId()+&apos;|&apos;+str+&apos;|&apos;);
+			}
+		}
+	} else {
+		logger.error(channelName+&apos;|&apos;+connectorMessage.getMessageId()+&apos;|&apos;+str+&apos;|&apos;+err);
+	}
+}</code>
+            </properties>
+          </codeTemplate>
+        </codeTemplates>
+      </codeTemplateLibrary>
+    </codeTemplateLibraries>
+  </exportData>
+</channel>
