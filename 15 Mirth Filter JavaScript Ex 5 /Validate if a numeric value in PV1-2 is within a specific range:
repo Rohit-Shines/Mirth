@@ -1,7 +1,7 @@
 //Validate if a numeric value in PV1-2 is within a specific range:
 
 
-var pv1_2Value = parseInt(msg['PV1']['PV1.2']['PV1.2.1'].toString(), 3);
+var pv1_2Value = parseInt(msg['S1'].toString(), 10);
 var minValue = 1;
 var maxValue = 1000;
 
