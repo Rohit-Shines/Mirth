@@ -1,0 +1,19 @@
+//Perform a regex pattern match on a specific field value in EVN1 ( event type code)
+//
+//Regex:        /^[A-Z]{3}\d{3}$/
+//
+//• ^ asserts the start of the string.
+//• [A-Z]{3} matches exactly three uppercase letters from A to Z.
+//• \d{3} matches exactly three digits (0-9).
+//$ asserts the end of the string.
+
+var regexPattern = /^[A-Z]{3}\d{3}$/;
+var fieldValue = msg['EVN']['EVN.1']['EVN.1.1'].toString();
+
+if (regexPattern.test(fieldValue)) {
+    // The EVN 1 field value matches the specified regex pattern
+    return true;
+}
+
+// The EVN 1  field value does not match the specified regex pattern
+return false;
