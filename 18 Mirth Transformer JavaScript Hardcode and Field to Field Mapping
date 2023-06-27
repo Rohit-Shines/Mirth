@@ -1,0 +1,8 @@
+// HardCoding
+
+msg['MSH']['MSH.3']['MSH.3.1']="Mirth"
+msg['MSH']['MSH.4']['MSH.4.1']="Tutorials"
+
+
+// Field To field mapping 
+msg['MSH']['MSH.11']['MSH.11.1']= msg['MSH']['MSH.10']['MSH.10.1']
