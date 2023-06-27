@@ -1,0 +1,65 @@
+//EXAMPLE:1
+
+//In Mirth Connect, the logger.info() function is used to log informational messages during message processing.
+
+var firstName = msg['PID']['PID.5']['PID.5.2'].toString();
+logger.info('Processing message for patient: ' + firstName);
+
+
+//EXAMPLE:2
+
+// Log an informational message
+	logger.info('Received message: ' + msg);
+	
+	// Attempt to process the message
+	try {
+	  var messageType = msg['MSH']['MSH.9']['MSH.9.1'].toString();
+	  
+	  // Check if the message type is "ADT"
+	  if (messageType === 'ADT') {
+	    // Do some processing here
+	    // ...
+	    // ...
+	    // ...
+	
+	    // If everything is successful, log a success message
+	    logger.info('Message processed successfully mirth tutorials.');
+	  } else {
+	    // Log a warning for invalid message type
+	    logger.warn('Invalid message type: ' + messageType);
+	  }
+	
+	  
+	} catch (error) {
+	  // If an error occurs, log an error message
+	  logger.error('Error processing message: ' + error);
+	
+	
+	  
+	} finally {
+	  // Code that runs regardless of whether an error was thrown or not
+	  logger.info('Executing the code even after getting an error.');
+	}
+	
+	// Continue with the remaining steps in the channel
+
+
+//EXAMPLE:3
+
+//Logging the count of repeating segments:
+
+
+var count = msg['OBX'].length(); // Assuming OBX is a repeating segment
+logger.info('Number of OBX segments: ' + count);
+
+
+//EXAMPLE:4
+
+
+//Logging the start and end of a channel or specific transformer step:
+
+logger.info('Starting channel processing...');
+// ... other processing steps ...
+logger.info('Completed');
+
+
