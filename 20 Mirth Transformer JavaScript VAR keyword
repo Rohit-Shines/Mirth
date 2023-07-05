@@ -1,0 +1,13 @@
+
+
+// Declare and assign values to variables
+
+
+
+var name ="MirthTutorials";
+
+
+logger.info("Testing The Variable:    " + name);
+
+
+msg['MSH']['MSH.3']['MSH.3.1']= name.toUpperCase();
