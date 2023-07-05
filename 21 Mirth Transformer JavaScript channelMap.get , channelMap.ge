@@ -1,0 +1,10 @@
+
+// Step 1: Assign a value to a channel map variable
+var myVariable = 'Hello, Mirth!';
+channelMap.put('myVariableKey', myVariable);
+
+
+// step 2: Retrieve the value from the channel map
+var retrievedValue = channelMap.get('myVariableKey');
+
+msg['MSH']['MSH.3']['MSH.3.1']= retrievedValue;
