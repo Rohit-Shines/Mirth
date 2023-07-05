@@ -1,10 +1,20 @@
 
 // Step 1: Assign a value to a channel map variable
 var myVariable = 'Hello, Mirth!';
-channelMap.put('myVariableKey', myVariable);
+channelMap.put('key', myVariable);
+
+var msgType = msg['MSH']['MSH.9']['MSH.9.1'].toString()
+
+
+channelMap.put('key2', msgType); // testing for file name to be saved
+
+
+
+
 
 
 // step 2: Retrieve the value from the channel map
-var retrievedValue = channelMap.get('myVariableKey');
+
+var retrievedValue = channelMap.get('key');
 
 msg['MSH']['MSH.3']['MSH.3.1']= retrievedValue;
