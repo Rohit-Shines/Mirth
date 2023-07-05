@@ -1,24 +1,18 @@
 
 //Channel 1
 
-// Put a variable into the globalChannelMap
-var myVariable = 'Hello, Mirth! Global Map';
-
-logger.info("Testing The Variable channel 1:    " + myVariable);
-
-globalChannelMap.put('myVariableKey', myVariable);
+var msh12 = "9.99"
+globalMap.put("versionID", msh12);
 
 
-
-// Make sure you are selecting channel to in channel 1 destination
 
 
 // Channel 2
 
-// Retrieve the variable from the globalChannelMap
 
-var retrievedValue = globalChannelMap.get('myVariableKey');
 
-logger.info('Channel 2 retrieved: ' + retrievedValue);
 
-msg['MSH']['MSH.3']['MSH.3.1']= retrievedValue
+var msh12= globalMap.get("versionID");
+
+msg['MSH']['MSH.3']['MSH.3.1']= msh12;
+
