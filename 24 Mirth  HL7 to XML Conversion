@@ -1,0 +1,38 @@
+
+HL7 TO XML 
+
+Input
+
+MSH|^~\&|PzTHNET|xx|HBOC_PCS|RVH|29249119189828||ADT^A83|Q1844427484T18148448|P|2.4
+PID|1|ZZZV98884784^^^QC^^CD:|123456^^^RVH~9999999^^^HNzM_PERSONID||Test^Pztient8^zx^zx^zx^zx^zx^zx^zxA^^zx||19841118|M|||4-4848 RUE MzSSON^^MONTREzL^QUE^H1X 1S1^CzNzDz||(448)728-8824|(999)999-9999|F|2||^^^^^CD:9818917|||||||9|z7||||N
+EVN|||||||||
+PV1|1|O|4CVIDH^^^RVH^^^GLEN Cliniques z^zx^zx^zx^zx||||112444^Hzmel^zlexzndrz^^^^^^License Number Physicizn zlizs Pzxzxl|||||||||||O|4988847844CVIDH29249119^^^OzCIS FIN Number||||||||||||||||||||||z|||29299228114199
+ORC|RE|2491191924998811999748^OzCIS_Order_Id|1294448199^HNzM_ORDERID
+OBR|1|2491191924998811999748^OzCIS_Order_Id|1294448199^HNzM_ORDERID|BTES^-Tes Bizxzv|||29249119192499|||^CONTRIBUTOR_SYSTEM^OzCIS||||29249119129428|BLOOD&Szng|112444^Hzmel^zlexzndrz^^^^^^License Number Physicizn zlizs Pzxzxl||||999992924919992284^HNz_zCCN~48498478^HNz_zCCNID||29249119189828||Generzl Lzb|Mzxdified|TBz&Testzxsterzxne Bizxzvzilzble|1^^^29249119192499^^RT~^^^29249119192499^^RT||1294448179&HNzM_ORDERID^2491191924998811999748&OzCIS_Order_Id|||||||29249119192499
+OBX|1|TX|BTES^Testzxstérzxne bizxdispzxnible||n/z|nmzxl/L^nmzxl/L|4.89-11.49^4.89^11.49|||? Unknzxwn|zuth (Verified)|||29249119189828||PID14488999^Stzllzxne^Mziz^^^^^^CD:1149189|^^^CD:17994179
+OBX|2|NM|zLB^zlbumine||41|g/L^g/L|48-82^48^82|||? Unknzxwn|zuth (Verified)|||29249119124992||^SYSTEM^SYSTEM|^^^CD:17994198
+
+Output
+
+PateintDetails>
+    <ID>xxxxxxx</ID>  // PV1 3.8 without space
+    <BedName>xxxxxxxx</BedName> //pv1 3.8
+    <PatientName>xxxxxxxxe</PatientName>  // pid 5
+    <attendingphys>xxxxxx</attendingphys> pv1 -7 
+    <attendingphysprefix>xxxxxxxxx</attendingphysprefix>  // pv1 7.6
+    <attendingphysdegree>xxxxxxx</attendingphysdegree>  //pv1 7.7
+</PateintDetails>
+
+
+
+//##################Code###############//
+tmp['ID'] = msg['PV1']['PV1.3']['PV1.3.8'].toString();
+
+tmp['BedName']= msg['PV1']['PV1.3']['PV1.3.8'].toString();
+
+tmp['PatientName']= msg['PID']['PID.5']['PID.5.1'].toString() +" "+ msg['PID']['PID.5']['PID.5.2'].toString();
+
+tmp['attendingphys']= msg['PV1']['PV1.7']['PV1.7.2'].toString() + " "+ msg['PV1']['PV1.7']['PV1.7.3'].toString()
+
+
+
