@@ -26,3 +26,11 @@ channelMap.put('pdfContent', htmlContent);
 //PID|||PATIENT_ID|John^Doe|Sachin tendulker|1973 April 24th||GOD ofcricket|
 //OBR|1|ORDER_ID_1|PLACER_1|FILLER_1|||||20230728120000
 //OBX|1|ST|DIAGNOSIS|1|Patient has a fever but will play cricket
+
+
+For final code
+
+MSH|^~\&|SENDING_APP|SENDING_FACILITY|RECEIVING_APP|RECEIVING_FACILITY|20230728120000||ADT^A01|1234567890|P|2.5
+PID|||PATIENT_ID|John^Doe|Sachin tendulker|1973 April 24th||||GOD OF CRICKET :) |
+OBR|1|ORDER_ID_1|PLACER_1|FILLER_1|||||20230728120000
+OBX|1|ST|DIAGNOSIS|1|Patient has a fever but will play cricket
