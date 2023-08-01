@@ -1,0 +1,80 @@
+// Import the required Java classes
+importPackage(Packages.org.mule.module.hl7.v2.x);
+importPackage(Packages.org.json);
+
+// Function to transform HL7 to JSON
+function hl7ToJson(hl7Message) {
+    var hl7Parser = new DefaultHapiContext().getGenericParser();
+    var hl7Msg = new HL7Message(hl7Message);
+    var json = hl7Parser.encodeJSON(hl7Msg.getMessage());
+    return JSON.parse(json); // Parse the JSON string to create a JavaScript object
+}
+
+// Main entry point of the transformer
+function transform(message) {
+    // The 'message' parameter contains the HL7 message received
+    var hl7Message = message.toString();
+    
+    // Call the hl7ToJson function to perform the transformation
+    var jsonResult = hl7ToJson(hl7Message);
+    
+    // Return the transformed JSON message
+    return jsonResult;
+}
+
+
+
+
+
+Sample Input MSG
+MSH|^~\&|SENDINGAPP|SENDINGFACILITY|RECEIVINGAPP|RECEIVINGFACILITY|20230727120000||ADT^A01|123456789|P|2.4
+EVN||20230727120000
+PID|1|12345|12345|PATIENT^TEST||19900101|M|||123 Main St^^New York^NY^10001||555-1234||S||123456789|123-45-6789
+PV1|1|O|LOCATION1^Room1|||||||REFERRING_DOCTOR^DOCTOR|||LOCATION2|||12345|||||||||||||||||||||||||20230727120000
+
+
+ Output
+{
+  "MSH": {
+    "FieldSeparator": "|",
+    "EncodingCharacters": "^~\\&",
+    "SendingApplication": "SENDINGAPP",
+    "SendingFacility": "SENDINGFACILITY",
+    "ReceivingApplication": "RECEIVINGAPP",
+    "ReceivingFacility": "RECEIVINGFACILITY",
+    "DateTime": "20230727120000",
+    "MessageType": "ADT^A01",
+    "MessageControlID": "123456789",
+    "ProcessingID": "P",
+    "VersionID": "2.4"
+  },
+  "EVN": {
+    "DateTime": "20230727120000"
+  },
+  "PID": {
+    "SetIDPID": "1",
+    "PatientID": "12345",
+    "PatientIdentifierList": "12345",
+    "PatientName": "PATIENT^TEST",
+    "BirthDate": "19900101",
+    "Sex": "M",
+    "PatientAddress": {
+      "StreetAddress": "123 Main St",
+      "City": "New York",
+      "State": "NY",
+      "ZipCode": "10001"
+    },
+    "PhoneNumberHome": "555-1234",
+    "MaritalStatus": "S",
+    "SSNNumber": "123456789",
+    "DriverLicenseNumber": "123-45-6789"
+  },
+  "PV1": {
+    "SetIDPV1": "1",
+    "PatientClass": "O",
+    "AssignedPatientLocation": "LOCATION1^Room1",
+    "ReferringDoctor": "REFERRING_DOCTOR^DOCTOR",
+    "AdmissionDateTime": "20230727120000"
+    // Other PV1 fields...
+  }
+}
