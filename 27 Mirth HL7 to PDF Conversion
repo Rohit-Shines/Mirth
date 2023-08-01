@@ -1,12 +1,22 @@
 // Extracting data from HL7 message
-var patientName = msg['PID']['PID.5']['PID.5.1'].toString();
-var patientAge = msg['PID']['PID.7']['PID.7.1'].toString();
-var diagnosis = msg['OBX']['OBX.5']['OBX.5.1'].toString();
+var patientName = msg['PID']['PID.5']['PID.5.1'].toString() || 'N/A';
+var patientAge = msg['PID']['PID.6']['PID.6.1'].toString() || 'N/A';
+var race = msg['PID']['PID.8']['PID.8.1'].toString() || 'N/A';
+var diagnosis = msg['OBX']['OBX.5']['OBX.5.1'].toString() || 'N/A';
 
-var htmlContent = "<html><head><title>ROHIT HL7 MIRTH TUTORIALS - Patient Report</title><style>body{font-family:Arial,sans-serif;margin:40px;padding:20px;background-color:#F8F8F8;}h1{color:#007BFF;font-size:28px;margin-bottom:20px;border-bottom:2px solid #007BFF;}h2{color:#17A2B8;font-size:24px;margin-top:30px;}p{color:#6C757D;font-size:16px;margin-top:5px;margin-bottom:5px;}strong{color:#DC3545;}.section{margin-top:20px;border-bottom:1px solid #DCDCDC;padding-bottom:10px;}.footer{margin-top:50px;text-align:center;}img{display:block;margin:0 auto;max-width:300px;height:auto;}</style></head><body><h1>ROHIT HL7 MIRTH TUTORIALS - Patient Report</h1><div class='section'><h2>Patient Information</h2><p><strong>Name:</strong> " + patientName + "</p><p><strong>Age:</strong> " + patientAge + "</p><p><strong>Gender:</strong> " + race + "</p></div><div class='section'><h2>Diagnosis</h2><p>" + diagnosis + "</p></div><h2>Additional Details</h2><p>Here are some additional details about the patient and diagnosis...</p><div class='footer'><img src='https://ichef.bbci.co.uk/news/976/cpsprodpb/E738/production/_117729195_gettyimages-110022758-594x594.jpg.webp' alt='Hospital Image'></div></body></html>";
+// Creating HTML content for the PDF
+var htmlContent = "<html><head><title>ROHIT HL7 MIRTH TUTORIALS - Patient Report</title><style>body{font-family: Arial, sans-serif; margin: 40px; padding: 20px; background-color: #F8F8F8;} h1{color: #007BFF; font-size: 28px; margin-bottom: 20px; border-bottom: 2px solid #007BFF;} h2{color: #17A2B8; font-size: 24px; margin-top: 30px;} p{color: #6C757D; font-size: 16px; margin-top: 5px; margin-bottom: 5px;} strong{color: #DC3545;} .section{margin-top: 20px; border-bottom: 1px solid #DCDCDC; padding-bottom: 10px;}</style></head><body><h1>ROHIT HL7 MIRTH TUTORIALS - Patient Report</h1><div class='section'><h2>Patient Information</h2><p><strong>Name:</strong> " + patientName + "</p><p><strong>Age:</strong> " + patientAge + "</p><p><strong>Gender:</strong> " + race + "</p></div><div class='section'><h2>Diagnosis</h2><p>" + diagnosis + "</p></div><h2>Additional Details</h2><p>Here are some additional details about the patient and diagnosis...</p></body></html>";
 
 // Set the HTML content to the 'pdfContent' channel map variable
 channelMap.put('pdfContent', htmlContent);
+
+
+//sample MSG
+//
+//MSH|^~\&|SENDING_APP|SENDING_FACILITY|RECEIVING_APP|RECEIVING_FACILITY|20230728120000||ADT^A01|1234567890|P|2.5
+//PID|||PATIENT_ID|John^Doe|Sachin tendulker|1973 April 24th||GOD ofcricket|
+//OBR|1|ORDER_ID_1|PLACER_1|FILLER_1|||||20230728120000
+//OBX|1|ST|DIAGNOSIS|1|Patient has a fever but will play cricket
 
 
 
