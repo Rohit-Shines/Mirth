@@ -1,11 +1,11 @@
 // Extracting data from HL7 message
 var patientName = msg['PID']['PID.5']['PID.5.1'].toString() || 'N/A';
 var patientAge = msg['PID']['PID.6']['PID.6.1'].toString() || 'N/A';
-var race = msg['PID']['PID.8']['PID.8.1'].toString() || 'N/A';
+var race = msg['PID']['PID.10']['PID.10.1'].toString() || 'N/A';
 var diagnosis = msg['OBX']['OBX.5']['OBX.5.1'].toString() || 'N/A';
 
 // Creating HTML content for the PDF
-var htmlContent = "<html><head><title>ROHIT HL7 MIRTH TUTORIALS - Patient Report</title><style>body{font-family: Arial, sans-serif; margin: 40px; padding: 20px; background-color: #F8F8F8;} h1{color: #007BFF; font-size: 28px; margin-bottom: 20px; border-bottom: 2px solid #007BFF;} h2{color: #17A2B8; font-size: 24px; margin-top: 30px;} p{color: #6C757D; font-size: 16px; margin-top: 5px; margin-bottom: 5px;} strong{color: #DC3545;} .section{margin-top: 20px; border-bottom: 1px solid #DCDCDC; padding-bottom: 10px;}</style></head><body><h1>ROHIT HL7 MIRTH TUTORIALS - Patient Report</h1><div class='section'><h2>Patient Information</h2><p><strong>Name:</strong> " + patientName + "</p><p><strong>Age:</strong> " + patientAge + "</p><p><strong>Gender:</strong> " + race + "</p></div><div class='section'><h2>Diagnosis</h2><p>" + diagnosis + "</p></div><h2>Additional Details</h2><p>Here are some additional details about the patient and diagnosis...</p></body></html>";
+var htmlContent = "<html><head><title>ROHIT HL7 MIRTH TUTORIALS - Patient Report</title><style>body{font-family: Arial, sans-serif; margin: 40px; padding: 20px; background-color: #F8F8F8;} h1{color: #007BFF; font-size: 28px; margin-bottom: 20px; border-bottom: 2px solid #007BFF;} h2{color: #17A2B8; font-size: 24px; margin-top: 30px;} p{color: #6C757D; font-size: 16px; margin-top: 5px; margin-bottom: 5px;} strong{color: #DC3545;} .section{margin-top: 20px; border-bottom: 1px solid #DCDCDC; padding-bottom: 10px;}</style></head><body><h1>ROHIT HL7 MIRTH TUTORIALS - Patient Report</h1><div class='section'><h2>Patient Information</h2><p><strong>Name:</strong> " + patientName + "</p><p><strong>Age:</strong> " + patientAge + "</p><p><strong>Race:</strong> " + race + "</p></div><div class='section'><h2>Diagnosis</h2><p>" + diagnosis + "</p></div><h2>Additional Details</h2><p>Here are some additional details about the patient and diagnosis...</p></body></html>";
 
 // Set the HTML content to the 'pdfContent' channel map variable
 channelMap.put('pdfContent', htmlContent);
