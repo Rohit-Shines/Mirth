@@ -1,0 +1,34 @@
+// Step 1: Extract data from JSON
+var patientId = $('patient.id');
+var patientName = $('patient.name');
+var gender = $('patient.gender');
+var dob = $('patient.dob');
+var visitId = $('visit.id');
+var admitDate = $('visit.admitDate');
+
+// Step 2: Construct the HL7 message
+var hl7Message =
+  'MSH|^~\\&|MIRTH_CONNECT|SENDING_APP|HL7_TEST|RECEIVING_APP|' + Date.now() + '||ADT^A04|' + Date.now() + '|P|2.5\r' +
+'EVN||' + Date.now() + '|||\r' +
+  'PID|||' + patientId + '||' + patientName + '||' + dob + '|' + gender + '\r' +
+  'PV1||I|' + visitId + '|||||||||||||||||||||||||||||||||||||||||' + admitDate + '\r';
+
+// Set the output message as HL7
+msg = hl7Message;
+
+
+
+//Smaple JSON MSG to TEST
+//
+//{
+//  "patient": {
+//    "id": "12345",
+//    "name": "John Doe",
+//    "gender": "M",
+//    "dob": "1980-01-15"
+//  },
+//  "visit": {
+//    "id": "67890",
+//    "admitDate": "2023-07-27"
+//  }
+//}
