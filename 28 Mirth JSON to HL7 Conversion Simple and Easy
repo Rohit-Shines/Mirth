@@ -1,34 +1,72 @@
-// Step 1: Extract data from JSON
-var patientId = $('patient.id');
-var patientName = $('patient.name');
-var gender = $('patient.gender');
-var dob = $('patient.dob');
-var visitId = $('visit.id');
-var admitDate = $('visit.admitDate');
 
-// Step 2: Construct the HL7 message
-var hl7Message =
-  'MSH|^~\\&|MIRTH_CONNECT|SENDING_APP|HL7_TEST|RECEIVING_APP|' + Date.now() + '||ADT^A04|' + Date.now() + '|P|2.5\r' +
-'EVN||' + Date.now() + '|||\r' +
-  'PID|||' + patientId + '||' + patientName + '||' + dob + '|' + gender + '\r' +
-  'PV1||I|' + visitId + '|||||||||||||||||||||||||||||||||||||||||' + admitDate + '\r';
+//Example 1
+// Sample JSON message
+var jsonMessage = {
+  "patientName": "John Doe",
+  "gender": "M",
+  "dob": "19800101"
+};
 
-// Set the output message as HL7
+// Create an HL7 message
+var hl7Message = [
+  "MSH|^~\\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|20230101120000||ADT^A08|MSGID123456789|P|2.3",
+  "PID|||123456||" + jsonMessage.patientName + "||" + jsonMessage.dob + "|" + jsonMessage.gender,
+  // Add more segments as needed
+].join('\r');
+
+// Set the transformed HL7 message
 msg = hl7Message;
 
 
 
-//Smaple JSON MSG to TEST
-//
-//{
-//  "patient": {
-//    "id": "12345",
-//    "name": "John Doe",
-//    "gender": "M",
-//    "dob": "1980-01-15"
-//  },
-//  "visit": {
-//    "id": "67890",
-//    "admitDate": "2023-07-27"
-//  }
-//}
+Sample MSG1 to send
+
+{
+  "patientName": "John Doe",
+  "gender": "M",
+  "dob": "19800101"
+}
+
+
+
+
+//Example 2
+
+
+// Sample JSON patient admission request
+var jsonMessage = {
+  "patientName": "Jane Smith",
+  "gender": "F",
+  "dob": "19900215",
+  "admitDate": "20230801",
+  "patientId": "123456789",
+  "providerId": "987654",
+  "diagnosis": "Pneumonia"
+};
+
+// Create an HL7 ADT A01 message
+var hl7Message = [
+  "MSH|^~\\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|20230801120000||ADT^A01|MSGID987654321|P|2.3",
+  "PID|||" + jsonMessage.patientId + "||" + jsonMessage.patientName + "||" + jsonMessage.dob + "|" + jsonMessage.gender,
+  "PV1||I|" + jsonMessage.providerId + "|||||||N||||" + jsonMessage.admitDate,
+  "DG1|1||" + jsonMessage.diagnosis,
+  // Add more segments as needed
+].join('\r');
+
+// Set the transformed HL7 ADT A01 message
+msg = hl7Message;
+
+
+
+Sample MSG 2
+
+{
+  "patientName": "Jane Smith",
+  "gender": "F",
+  "dob": "19900215",
+  "admitDate": "20230801",
+  "patientId": "123456789",
+  "providerId": "987654",
+  "diagnosis": "Pneumonia"
+}
+
