@@ -1,16 +1,8 @@
-
-//Example 1
-// Sample JSON message
-var jsonMessage = {
-  "patientName": "John Doe",
-  "gender": "M",
-  "dob": "19800101"
-};
-
 // Create an HL7 message
 var hl7Message = [
-  "MSH|^~\\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|20230101120000||ADT^A08|MSGID123456789|P|2.3",
-  "PID|||123456||" + jsonMessage.patientName + "||" + jsonMessage.dob + "|" + jsonMessage.gender,
+  "MSH|^~\\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|" + DateUtil.getCurrentDate('yyyyMMddHHmmss') + "||ADT^A08|MSGID123456789|P|2.3",
+  "PID|||123456||" + msg['patient']['firstName'] + "||" + msg['patient']['dob'] + "|" + msg['patient']['gender'],
+  "DG1|||" + msg['diagnosis'],
   // Add more segments as needed
 ].join('\r');
 
@@ -18,55 +10,14 @@ var hl7Message = [
 msg = hl7Message;
 
 
-
-Sample MSG1 to send
-
-{
-  "patientName": "John Doe",
-  "gender": "M",
-  "dob": "19800101"
-}
-
-
-
-
-//Example 2
-
-
-// Sample JSON patient admission request
-var jsonMessage = {
-  "patientName": "Jane Smith",
-  "gender": "F",
-  "dob": "19900215",
-  "admitDate": "20230801",
-  "patientId": "123456789",
-  "providerId": "987654",
-  "diagnosis": "Pneumonia"
-};
-
-// Create an HL7 ADT A01 message
-var hl7Message = [
-  "MSH|^~\\&|SENDING_APP|SENDING_FAC|RECEIVING_APP|RECEIVING_FAC|20230801120000||ADT^A01|MSGID987654321|P|2.3",
-  "PID|||" + jsonMessage.patientId + "||" + jsonMessage.patientName + "||" + jsonMessage.dob + "|" + jsonMessage.gender,
-  "PV1||I|" + jsonMessage.providerId + "|||||||N||||" + jsonMessage.admitDate,
-  "DG1|1||" + jsonMessage.diagnosis,
-  // Add more segments as needed
-].join('\r');
-
-// Set the transformed HL7 ADT A01 message
-msg = hl7Message;
-
-
-
-Sample MSG 2
-
-{
-  "patientName": "Jane Smith",
-  "gender": "F",
-  "dob": "19900215",
-  "admitDate": "20230801",
-  "patientId": "123456789",
-  "providerId": "987654",
-  "diagnosis": "Pneumonia"
-}
-
+//
+//{
+//  "patient": {
+//    "firstName": "John",
+//    "lastName": "Doe",
+//    "dob": "1985-05-15",
+//    "gender": "M"
+//  },
+//  "diagnosis": "Fever",
+//  "timestamp": "2023-08-03T10:30:00Z"
+//}
