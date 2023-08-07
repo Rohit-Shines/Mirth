@@ -1,1 +1,42 @@
 
+// Step 1: Extract data from JSON
+var patientId = msg['patient']['id'];
+var patientName = msg['patient']['name'];
+var gender = msg['patient']['gender'];
+var dob = msg['patient']['dob'];
+var visitId = msg['visit']['id'];
+var admitDate = msg['visit']['admitDate'];
+
+// Step 2: Construct the XML message
+var xmlMessage =
+  '<root>' +
+  '<patient>' +
+  '<id>' + patientId + '</id>' +
+  '<name>' + patientName + '</name>' +
+  '<gender>' + gender + '</gender>' +
+  '<dob>' + dob + '</dob>' +
+  '</patient>' +
+  '<visit>' +
+  '<id>' + visitId + '</id>' +
+  '<admitDate>' + admitDate + '</admitDate>' +
+  '</visit>' +
+  '</root>';
+
+// Set the output message as XML
+msg = xmlMessage;
+
+
+//
+//sample msg
+//{
+//  "patient": {
+//    "id": "12345",
+//    "name": "John Doe",
+//    "gender": "M",
+//    "dob": "1980-01-15"
+//  },
+//  "visit": {
+//    "id": "67890",
+//    "admitDate": "2023-07-27"
+//  }
+//}
