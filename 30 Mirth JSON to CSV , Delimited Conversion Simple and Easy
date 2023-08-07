@@ -1,0 +1,75 @@
+
+######### Method 1 - Direct  #########
+// Step 1: Extract data from JSON
+var patientId = msg['patient']['id'];
+var patientName = msg['patient']['name'];
+var gender = msg['patient']['gender'];
+var dob = msg['patient']['dob'];
+var visitId = msg['visit']['id'];
+var admitDate = msg['visit']['admitDate'];
+
+// Step 2: Construct the delimited message
+var delimitedMessage =
+  patientId + ',' +
+  patientName + ',' +
+  gender + ',' +
+  dob + ',' +
+  visitId + ',' +
+  admitDate;
+
+// Set the output message as delimited
+msg = delimitedMessage;
+
+
+
+//Smaple JSON MSG to TEST
+//
+//{
+//  "patient": {
+//    "id": "12345",
+//    "name": "John Doe",
+//    "gender": "M",
+//    "dob": "1980-01-15"
+//  },
+//  "visit": {
+//    "id": "67890",
+//    "admitDate": "2023-07-27"
+//  }
+//}
+
+#########  Method 2 - Mapping #########
+
+tmp['row']['column1'] =msg['patient']['id']
+tmp['row']['column2'] =msg['patient']['name']
+tmp['row']['column3'] =msg['patient']['gender']
+tmp['row']['column4'] =msg['visit']['admitDate']
+
+
+##Outbbound MSG Template
+12345,John Doe,M,1980-01-15,67890,2023-07-27
+
+
+
+
+######### Mehtod 3 - Multiple Rows and Columns #########
+// Step 1: Extract data from JSON
+var patientId = msg['patient']['id'];
+var patientName = msg['patient']['name'];
+var gender = msg['patient']['gender'];
+var dob = msg['patient']['dob'];
+var visitId = msg['visit']['id'];
+var admitDate = msg['visit']['admitDate'];
+
+// Step 2: Construct the CSV message
+var csvMessage =
+  'Patient ID, Patient Name, Gender, Date of Birth, Visit ID, Admit Date\r\n' +
+  patientId + ',' +
+  patientName + ',' +
+  gender + ',' +
+  dob + ',' +
+  visitId + ',' +
+  admitDate;
+
+// Set the output message as CSV
+msg = csvMessage;
+
