@@ -1,0 +1,11 @@
+
+//Convert Gender (PID-8): Convert gender codes (e.g., 'M' for Male and 'F' for Female) to full text.
+
+
+var genderCode = msg['PID']['PID.8']['PID.8.1'].toString();
+if (genderCode === 'M') {
+    msg['PID']['PID.8']['PID.8.1'] = 'Male';
+} else if (genderCode === 'F') {
+    msg['PID']['PID.8']['PID.8.1'] = 'Female';
+}
+
