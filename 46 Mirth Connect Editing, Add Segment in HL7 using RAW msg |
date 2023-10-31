@@ -1,0 +1,23 @@
+msg['PID']['PID.5']['PID.5.1'] = 'TheLegend Sachin Tendulkar';
+
+
+
+msg['PID']['PID.7']['PID.7.1'] = '19730424'; // April 24, 1973
+
+
+msg['PID']['PID.8']['PID.8.1'] = 'M'; // Male
+
+
+msg['NK1']['NK1.2']['NK1.2.1'] = 'Spouse Name';
+
+
+var newObxSegment = 'OBX|1|ST|1001^Result^L||This is a new result|';
+msg['OBX'] = newObxSegment;
+
+
+
+if (msg['NK1']) {
+    delete msg['NK1'];
+} else {
+    // Handle the case where NK1 segment doesn't exist
+}
