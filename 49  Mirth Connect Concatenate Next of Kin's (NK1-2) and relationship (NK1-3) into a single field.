@@ -1,0 +1,17 @@
+// Concatenate Fields (NK1-2 and NK1-3): Concatenate Next of Kin's name (NK1-2) and relationship (NK1-3) into a single field.
+
+
+
+var nextOfKin = msg['NK1']['NK1.2']['NK1.2.1'].toString() + ' (' + msg['NK1']['NK1.3']['NK1.3.1'].toString() + ')';
+msg['NK1']['NK1.2']['NK1.2.1'] = nextOfKin;
+
+delete msg['NK1']['NK1.3']; // Remove NK1-3
+
+
+//0r
+
+var nextOfKin = msg['NK1']['NK1.2']['NK1.2.1'].toString() + msg['NK1']['NK1.3']['NK1.3.1'].toString();
+
+msg['NK1']['NK1.2']['NK1.2.1'] = nextOfKin;
+
+delete msg['NK1']['NK1.3']; // Remove NK1-3
