@@ -1,0 +1,28 @@
+var dob = msg['PID']['PID.7']['PID.7.1'].toString();
+
+// Check if the date is in the correct format (yyyyMMddHHmmss)
+if (dob.length === 14) {
+    // Reformat the date to 'MM/dd/yyyy' format
+    var month = dob.substr(4, 2);
+    var day = dob.substr(6, 2);
+    var year = dob.substr(0, 4);
+
+    // Update the date field with the new format
+    msg['PID']['PID.7']['PID.7.1'] = month + '/' + day + '/' + year;
+}
+
+
+//or
+
+var dob = msg['PID']['PID.7']['PID.7.1'].toString();
+
+// Check if the date is in the correct format (yyyyMMddHHmmss)
+if (dob.length === 14) {
+    // Reformat the date to 'MM/dd/yyyy' format
+    var month = dob.substr(4, 2);
+    var day = dob.substr(6, 2);
+    var year = dob.substr(0, 4);
+
+    // Update the date field with the new format
+    msg['PID']['PID.7']['PID.7.1'] = month + day +  year;
+}
