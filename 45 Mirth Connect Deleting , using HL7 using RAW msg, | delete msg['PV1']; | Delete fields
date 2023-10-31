@@ -1,0 +1,27 @@
+delete msg['PV1'];
+
+delete msg['PID']['PID.3']['PID.3.1'];
+delete msg['PID']['PID.2']['PID.2.1'];
+
+
+// Example HL7 Message
+var hl7Message = msg;
+
+// Delete the entire PV1 segment
+delete hl7Message['PV1'];
+
+// Delete PID-3.1 (Patient Identifier List)
+delete hl7Message['PID']['PID.3']['PID.3.1'];
+
+// Delete PID-2.1 (Patient Name - Given Name)
+delete hl7Message['PID']['PID.2']['PID.2.1'];
+
+// Return the modified message
+return hl7Message;
+
+
+MSH|^~&|SendingApplication|SendingFacility|ReceivingApplication|ReceivingFacility|MessageDateTime||ADT^A04|MessageControlID|ProcessingID|VersionID|CountryCode|CharacterSetID|PrincipalLanguageOfMessage|
+EVN|A04|MessageDateTime||
+PID|1||PatientID|AlternatePatientID||LastName^FirstName^MiddleInitial^Suffix^Prefix|AliasName|BirthDate|Gender||Address|PhoneNumber|MaritalStatus|PrimaryLanguage|Nationality|Religion|Race|EthnicGroup|BirthPlace|Citizenship|ContactPersonName|ContactPersonPhoneNumber|
+PV1|1|AdmittingFacilityName|PatientClass|AssignedPatientLocation|AdmissionType|PreadmitNumber|PriorPatientLocation|AttendingDoctor|ReferringDoctor|ConsultingDoctor|AdmitDateTime|DischargeDateTime|DischargeDisposition|AdmittingDiagnosis|PatientType|VisitNumber|FinancialClass|ChargePriceIndicator|CourtesyCode|CreditRating|ContractCode|TransferedToLocation|VisitIndicator|OtherHealthcareProvider|PatientStatus|EscortRequired|AdmitSource|
+
