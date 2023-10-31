@@ -1,0 +1,4 @@
+//Conditional Update (PID-5): Update the patient's last name (PID-5) only if it currently equals "Doe."
+if (msg['PID']['PID.5']['PID.5.1'].toString() === 'Doe') {
+    msg['PID']['PID.5']['PID.5.1'] = 'Smith';
+}
