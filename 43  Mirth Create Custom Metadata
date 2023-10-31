@@ -1,0 +1,35 @@
+
+// Extract MRN
+var mrn = msg['PID']['PID.3']['PID.3.1'].toString();
+
+// Set the extracted MRN as metadata
+channelMap.put('MRN', mrn);
+
+
+
+// Extract SSN
+var ssn = msg['PID']['PID.19']['PID.19.1'].toString();
+
+// Set the extracted SSN as metadata
+channelMap.put('SSN', ssn);
+
+
+// Extract Last Name
+var lastName = msg['PID']['PID.5']['PID.5.1'].toString();
+
+// Set the extracted Last Name as metadata
+channelMap.put('LastName', lastName);
+
+
+// Extract Date of Birth
+var dob = msg['PID']['PID.7']['PID.7.1'].toString();
+
+// Set the extracted Date of Birth as metadata
+channelMap.put('DOB', dob);
+
+
+// Extract Admitting Facility Name
+var facilityName = msg['PV1']['PV1.3']['PV1.3.1'].toString();
+
+// Set the extracted Admitting Facility Name as metadata
+channelMap.put('FacilityName', facilityName);
