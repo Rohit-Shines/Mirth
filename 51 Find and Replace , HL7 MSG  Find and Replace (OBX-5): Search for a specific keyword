@@ -1,0 +1,22 @@
+// Find and Replace (OBX-5): Search for a specific keyword within an observation result (OBX-5) and replace it.
+
+//Case sensitive
+
+var obx5 = msg['OBX'][0]['OBX.5']['OBX.5.1'].toString();
+var updatedObx5 = obx5.replace('OldKeyword', 'NewKeyword');
+msg['OBX'][0]['OBX.5']['OBX.5.1'] = updatedObx5;
+
+
+//No case sensitive
+
+var obx5 = msg['OBX'][0]['OBX.5']['OBX.5.1'].toString();
+var updatedObx5 = obx5.replace(/oldkeyword/gi, 'NewKeyword');
+msg['OBX'][0]['OBX.5']['OBX.5.1'] = updatedObx5;
+
+//In this code, the regular expression /oldkeyword/gi is used for the replacement. The g flag makes the replacement global (i.e., it will replace all occurrences of the keyword in the string), and the i flag makes the replacement case-insensitive.
+
+MSH|^~\&|SendingApp|SendingFac|ReceivingApp|ReceivingFac|20231031094313||ADT^A04|202310310943131|P|2.5|||||AL
+EVN|A04|202310310943131||||20231031094313
+PID|1||123456789|123456789|Doe^John||||||||||||||||||||||||||||||||||||
+PV1|1|I|2016^^^2012^A||||004777^Smith^John^A^Dr^^^NPI|004777^Smith^John^A^Dr^^^NPI|||||||||||||||||||||||||||||20160323151908||||||004777^Smith^John^A^Dr^^^NPI|20160323151908
+OBX|1|NM|WT|apple|Gandhi
