@@ -1,0 +1,36 @@
+52 Calculate Patients AGE
+
+
+//Calculate Age (PID-7): Calculate the patient's age based on their date of birth (PID-7
+) and update PID-7 with the calculated age.
+
+
+// Extract the date of birth (DOB) from the message and convert it to a string.
+var dob = msg['PID']['PID.7']['PID.7.1'].toString();
+
+// Create a Date object from the DOB string, ensuring proper formatting (YYYYMMDD).
+// 0 for January, 1 for February, and so on, up to 11 for December. 
+var dobDate = new Date(dob.substring(0, 4), dob.substring(4, 6) - 1, dob.substring(6, 8));
+
+// Get the current date.
+var today = new Date();
+
+// Calculate the age by subtracting the birth year from the current year.
+var age = today.getFullYear() - dobDate.getFullYear();
+
+// Check if the current month and day are before the birth month and day.
+// If so, subtract one year from the calculated age since the patient hasn't had their birthday yet this year.
+if (today.getMonth() < dobDate.getMonth() || (today.getMonth() === dobDate.getMonth() && today.getDate() < dobDate.getDate())) {
+    age--;
+}
+
+// Update PID-7 in the message with the calculated age as a string.
+msg['PID']['PID.7']['PID.7.1'] = age.toString();
+
+
+
+
+MSH|^~&|SENDINGAPPLICATION|SENDINGFACILITY|RECEIVINGAPPLICATION|RECEIVINGFACILITY|MESSAGEDATETIME||ADT^A04|MESSAGECONTROLID|PROCESSINGID|VERSIONID|COUNTRYCODE|CHARACTERSETID|PRINCIPALLANGUAGEOFMESSAGE|
+EVN|A04|MESSAGEDATETIME||
+PID|1||PATIENTID|ALTERNATEPATIENTID||LASTNAME^FIRSTNAME^MIDDLEINITIAL^SUFFIX^PREFIX|20221101222236|BIRTHDATE|GENDER||ADDRESS|PHONENUMBER|MARITALSTATUS|PRIMARYLANGUAGE|NATIONALITY|RELIGION|RACE|ETHNICGROUP|BIRTHPLACE|CITIZENSHIP|CONTACTPERSONNAME|CONTACTPERSONPHONENUMBER|
+PV1|1|ADMITTINGFACILITYNAME|PATIENTCLASS|ASSIGNEDPATIENTLOCATION|ADMISSIONTYPE|PREADMITNUMBER|PRIORPATIENTLOCATION|ATTENDINGDOCTOR|REFERRINGDOCTOR|CONSULTINGDOCTOR|ADMITDATETIME|DISCHARGEDATETIME|DISCHARGEDISPOSITION|ADMITTINGDIAGNOSIS|PATIENTTYPE|VISITNUMBER|FINANCIALCLASS|CHARGEPRICEINDICATOR|COURTESYCODE|CREDITRATING|CONTRACTCODE|TRANSFEREDTOLOCATION|VISITINDICATOR|OTHERHEALTHCAREPROVIDER|PATIENTSTATUS|ESCORTREQUIRED|ADMITSOURCE|
