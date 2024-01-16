@@ -1,0 +1,25 @@
+// Simple Try catch errors and logger.info
+
+try {
+    // Syntax error below
+
+    var msh3 = msg['MSH']['MSH.3']['MSH.3.1'].toString()
+	
+    if(msh3=="abc"){
+    	
+    	logger.info('The value of MSH3 is apple');
+    	return true;
+    	
+    }
+    else
+    {
+    	logger.info('The value of MSH3 is NOT EQUAL to apple');
+    	return false;
+    }    
+
+} catch (error) {
+    // Log the syntax error
+    logger.info('Syntax error occurred: ' + error.message);
+
+    return false;
+}
