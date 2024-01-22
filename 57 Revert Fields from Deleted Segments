@@ -1,0 +1,59 @@
+// Define a function to delete segments from the msg object
+function deleteSegments(msg, segments) {
+  segments.forEach(segment => {
+    if (msg.hasOwnProperty(segment)) {
+      delete msg[segment];
+    }
+  });
+}
+
+// Store the fields which are required by Receiving Application
+const evn1_1_value = msg['EVN']['EVN.1'];
+const pid2_value = msg['PID']['PID.2'];
+const pid3_value = msg['PID']['PID.3'];
+const pid5_value = msg['PID']['PID.5'];
+const pv1_3_value = msg['PV1']['PV1.3'];
+const pv1_3_1_value = msg['PV1']['PV1.3']['PV1.3.1'].toString();
+const pv1_3_2_value = msg['PV1']['PV1.3']['PV1.3.2'].toString();
+
+const mergedPV1_3_1 = pv1_3_1_value + '-' + pv1_3_2_value; // 
+
+const pv1_7_value = msg['PV1']['PV1.7'];
+const pv1_19_value = msg['PV1']['PV1.19'];
+const pv2_8_value = msg['PV2']['PV2.8'];
+const mrg1_value = msg['MRG']['MRG.1'];
+
+// Store the fields which are Optional by Receiving Application we can remove in testing if required
+const pid7_value = msg['PID']['PID.7'];
+const pid8_value = msg['PID']['PID.8'];
+const pv1_4_value = msg['PV1']['PV1.4'];
+const pv1_8_value = msg['PV1']['PV1.8'];
+const pv1_17_value = msg['PV1']['PV1.17'];
+
+
+// Delete the specified segments which are not required by Receiving Application
+deleteSegments(msg, ['ZWA','ZIN','ZPV','PD1','ROL', 'PID', 'EVN', 'PV1', 'PV2','ZPV', 'OBX', 'NK1', 'DG1', 'PR1', 'GT1', 'IN1', 'IN2', 'IN3', 'IN4', 'IAM', 'AIG', 'AIS', 'ACC', 'AL1', 'UB1', 'UB2', 'IN2', 'IN3', 'IN4']);
+
+
+
+// Map the stored required fields back to the msg object
+msg['EVN']['EVN.1'] = evn1_1_value;
+msg['PID']['PID.2'] = pid2_value;
+msg['PID']['PID.3']= pid3_value ;
+msg['PID']['PID.5'] = pid5_value;
+msg['PV1']['PV1.3']= pv1_3_value;
+msg['PV1']['PV1.3']['PV1.3.1'] =pv1_3_1_value;
+msg['PV1']['PV1.3']['PV1.3.2'] = mergedPV1_3_1;  // 
+msg['PV1']['PV1.7'] = pv1_7_value;
+msg['PV1']['PV1.19']= pv1_19_value
+msg['PV2']['PV2.8'] = pv2_8_value;
+msg['MRG']['MRG.1'] = mrg1_value;
+
+
+
+// Map the stored optional fields back to the msg object can remove if required in testing
+msg['PID']['PID.7']= pid7_value;
+msg['PID']['PID.8']= pid8_value;
+msg['PV1']['PV1.4']= pv1_4_value;
+msg['PV1']['PV1.8']= pv1_8_value;
+msg['PV1']['PV1.17']=pv1_17_value;
