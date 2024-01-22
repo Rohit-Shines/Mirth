@@ -1,0 +1,30 @@
+// Define a function to delete segments from the msg object
+function deleteSegments(msg, segments) {
+  segments.forEach(segment => {
+    if (msg.hasOwnProperty(segment)) {
+      delete msg[segment];
+    }
+  });
+}
+
+
+// Delete the specified segments which are not required by Securitas
+deleteSegments(msg, ['ZWA','ZIN','ZPV','PD1','ROL', 'PID', 'PV1', 'PV2','ZPV', 'OBX', 'NK1', 'DG1', 'PR1', 'GT1', 'IN1', 'IN2', 'IN3', 'IN4', 'IAM', 'AIG', 'AIS', 'ACC', 'AL1', 'UB1', 'UB2', 'IN2', 'IN3', 'IN4']);
+
+
+
+
+######MSG EXAMPLE#####
+MSH|^~&|SendingApplication|SendingFacility|ReceivingAppon|Receivility|MessageDateTime||ADT^A04|MeontrolID|ProcessingID|VersionID|
+EVN|A04|MessageDateTime||
+PID|1||PatientID|AlternatePatientID||LastName^FirstName^MiddleInitial^Suffix^Prefix|
+PV1|1|AdmittingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|PatientStatus|EscortRequired|AdmitSource|
+PV2|||
+DG1|||
+PR1|||
+MRG||||
+AIS|||
+ASC|||
+OBX||
+OBR||
+ZPV||||||
