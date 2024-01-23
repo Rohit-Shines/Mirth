@@ -1,0 +1,18 @@
+
+Code Template Sample Code 
+
+/**
+	This Function will delete multiple segments at a time Ex: deleteSegments(msg, ['ZWA','ZIN']);
+	@param {Any} msg - 
+	@param {Any} segments - 
+	@return {Any} 
+*/
+// Define a function to delete segments from the msg object
+function deleteSegments(msg, segments) {
+  segments.forEach(segment => {
+    if (msg.hasOwnProperty(segment)) {
+      delete msg[segment];
+    }			
+			
+  });
+}
