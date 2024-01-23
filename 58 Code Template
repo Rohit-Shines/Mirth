@@ -16,3 +16,20 @@ function deleteSegments(msg, segments) {
 			
   });
 }
+
+
+###Sample HL7 MSG to Test###
+
+MSH|^~&|SendingApplication|SendingFacility|ReceivingAppon|Receivility|MessageDateTime||ADT^A04|MeontrolID|ProcessingID|VersionID|
+EVN|A04|MessageDateTime||
+PID|1||PatientID|AlternatePatientID|Jaisreeeram|LastName^FirstName^MiddleInitial^Suffix^Prefix||||||||||||||||||||||
+PV1|1|AdmittingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|PatientStatus|EscortRequired|AdmitSource|
+PV2|||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+DG1|||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+PR1|||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+MRG||||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+AIS|||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+ASC|||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+OBX||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+OBR||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
+ZPV||||||tingFacilityName|Pa|VisitIndicator|OtherHealthcareProvider|Pat
