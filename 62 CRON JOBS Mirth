@@ -1,0 +1,68 @@
+
+2024: February 17th: Rohit Gundu
+
++--------------------------------------+------------------------+
+| Example                              | Cron Expression       |
++--------------------------------------+------------------------+
+| Every minute                         | * * * * * ?            |
+| Every 5 minutes                      | 0 */5 * * * ?          |
+| Every 15 minutes                     | 0 */15 * * * ?         |
+| Every 30 minutes                     | 0 */30 * * * ?         |
+| Every hour                           | 0 0 * * * ?            |
+| Every 2 hours                        | 0 0 */2 * * ?          |
+| Every 6 hours                        | 0 0 */6 * * ?          |
+| Every 12 hours                       | 0 0 */12 * * ?         |
+| Every day at midnight                | 0 0 0 * * ?            |
+| Every day at 6 AM                    | 0 0 6 * * ?            |
+| Every day at noon                    | 0 0 12 * * ?           |
+| Every day at 3 PM                    | 0 0 15 * * ?           |
+| Every weekday at 9 AM                | 0 0 9 ? * MON-FRI      |
+| Every Sunday at 3 AM                 | 0 0 3 ? * SUN          |
+| Every Saturday at 8 PM               | 0 0 20 ? * SAT         |
+| Every 2 days                         | 0 0 */2 * * ?          |
+| Every 3 days                         | 0 0 */3 * * ?          |
+| Every 5 days                         | 0 0 */5 * * ?          |
+| Every 10 days                        | 0 0 */10 * * ?         |
+| Every 15 days                        | 0 0 */15 * * ?         |
+| Every last day of the month at noon  | 0 0 12 L * ?           |
+| Every last Sunday of the month at 3 AM| 0 0 3 ? * 1L           |
+| Every first Monday of the month at 8 AM| 0 0 8 ? * 2#1          |
+| Every last Friday of the month at 6 PM| 0 0 18 ? * 6L          |
+| Every Monday and Thursday at 6 AM     | 0 0 6 ? * MON,THU      |
+| Every Wednesday and Friday at 10 AM  | 0 0 10 ? * WED,FRI     |
+| Every 4 hours on the 10th day         | 0 0 */4 10 * ?         |
+| Every 5 minutes during office hours (9 AM - 5 PM)| 0 */5 9-17 * * ?|
+| Every 15 seconds during the first half of the day (12 AM - 12 PM)| */15 * 0-11 * * ?|
+| Every 30 minutes last week of the month| 0 0/30 * L * ?         |
+| Every 5 minutes last Monday of the month| 0 */5 * ? * 2L         |
+| Every 10 minutes on odd days         | 0 */10 1-31/2 * * ?     |
+| Every Sunday and Wednesday at 4:30 AM| 0 30 4 ? * SUN,WED 1-4 |
+| Every 3 hours on the last day of the month| 0 0 */3 L * ?         |
+| Every 20 minutes on the last Friday in Jan,Feb| 0 */20 ? 1,2 FRI    |
+| Every minute during the first and last hour of the day| * 0,23 * * * ?  |
+| Every 2 hours on the last workday of the month| 0 0 */2 LW * ?      |
+| Complex Example                      | 0 */5 0,5,20 * * ? 1-11,3-12|
+| Every 5 minutes on odd days          | 0 */5 1-31/2 * * ?       |
+| Every 2 hours on even days           | 0 0 */2 2-30/2 * ?       |
+| Every 10 minutes on the 1st and 15th  | 0 */10 1,15 * * ?        |
+| Every 30 minutes on the last Sunday  | 0 0/30 ? * SUNL          |
+| Every 45 minutes on the 2nd and 17th  | 0 0,45 2,17 * * ?        |
+| Every Monday and Friday at 7 AM      | 0 0 7 ? * MON,FRI        |
+| Every Tuesday and Thursday at 2 PM   | 0 0 14 ? * TUE,THU       |
+| Every weekday at 11 AM and 5 PM      | 0 0 11,17 ? * MON-FRI    |
+| Every 20 minutes during the first 10 days of the month| 0 */20 1-10 * * ? |
+| Every 15 minutes during the last 7 days of the month| 0 */15 L-7,31 * * ?|
+| Every 3 hours on the 5th and 20th of each month| 0 0 */3 5,20 * ?     |
+| Every 10 minutes on weekdays during the first half of the day| 0 */10 0-11 * * 1-5|
+| Every 30 minutes on even days during office hours (9 AM - 5 PM)| 0 0/30 9-17 2-30/2 * ?|
+| Every 15 seconds during the first and last hour of the day| */15 0,23 * * * ?|
+| Every 20 minutes on the last Monday in Jan and Feb| 0 */20 ? 1,2 MONL    |
+| Every minute during the first 15 days of the month| * * 1-15 * * ?      |
+| Every Monday and Wednesday at 2 PM and 8 PM| 0 0 14,20 ? * MON,WED |
+| Every 4 hours on weekdays            | 0 0 */4 * * 1-5         |
+| Every 30 minutes on the last Thursday of the month| 0 0/30 ? * THUL      |
+| Every 45 minutes on odd days         | 0 0,45 1-31/2 * * ?      |
+| Every 10 minutes on the 7th, 14th, 21st, and 28th of the month| 0 */10 7,14,21,28 * * ?|
+| Every 5 minutes on the 3rd and 17th of each month| 0 */5 3,17 * * ?    |
+| Every 2 hours during the first 5 days of the month| 0 0 */2 1-5 * ?      |
+| Every 15 minutes on the 10th day of each month| 0 */15 0 10 * ?
