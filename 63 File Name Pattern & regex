@@ -1,0 +1,25 @@
+##### Basic######
+1. ^[a-zA-Z0-9]+\.txt$                  - Alphanumeric Filename (any length) before .txt
+2. ^[a-zA-Z0-9]{5,}\.txt$               - Alphanumeric Filename (at least 5 characters) before .txt
+3. ^[a-zA-Z0-9_]+\.txt$                 - Alphanumeric Filename with Underscore before .txt
+4. ^[a-zA-Z0-9-]+\.txt$                 - Filenames with Letters, Numbers, and Hyphens before .txt
+5. ^[a-zA-Z]{3}\.txt$                    - Filename with Exactly 3 Letters before .txt
+6. ^(?=(.*[a-zA-Z]){2})(?=(.*\d){2})[a-zA-Z0-9]+\.txt$ - Filename with Letters and Numbers, At Least 2 of Each, before .txt
+7. ^[a-zA-Z0-9-]+\.txt$                 - Filename with Alphabets, Numbers, and Hyphens, Any Length, before .txt
+8. ^[a-zA-Z0-9_]*[a-zA-Z]+[0-9_]*\.txt$ - Filename with Letters, Numbers, and At Least One Underscore before .txt
+9. ^[a-zA-Z0-9-]{8}\.txt$               - Filename with Alphabets, Numbers, and Hyphens, Exactly 8 Characters, before .txt
+10. ^[a-zA-Z]+\d{4}\.txt$                - Filename with Exactly 4 Digits and Letters before .txt
+
+
+#### Real time Scenarios
+
+1. ^[A-Z0-9]{8}$                      - Medical Record Number (MRN)          Example: ABCD1234
+2. ^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$ - Date of Birth (DOB) in MM/DD/YYYY format  Example: 01/15/1990
+3. ^\d{3}-\d{2}-\d{4}$                 - Social Security Number (SSN)        Example: 123-45-6789
+4. ^\d{10}$                            - Healthcare Provider NPI (National Provider Identifier)  Example: 1234567890
+5. ^[A-TV-Z]\d{2}\.[0-9A-Z]{2}$        - ICD-10 Diagnosis Code               Example: A12.X34
+6. ^\d{4,5}$                           - CPT Procedure Code                  Example: 1234
+7. ^\d{5}(-\d{4})?$                     - ZIP Code                            Example: 12345 or 12345-6789
+8. ^\d{9}[A-Z]$                        - Health Insurance Claim Number (HICN)  Example: 123456789A
+9. ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ - Email Address for Healthcare Provider  Example: user@example.com
+10. ^[A-Za-z]+,[ A-Za-z]+$              - Patient Name (First and Last)       Example: Doe, John
