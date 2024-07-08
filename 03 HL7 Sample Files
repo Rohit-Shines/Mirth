@@ -1,0 +1,41 @@
+ADT A01
+
+MSH|^~\&|ADT1|Good Health Hospital|MirthConnect|OpenAI|202307080830||ADT^A01|123456|P|2.3
+EVN|A01|202307080830|||
+PID|1||123456^^^Good Health Hospital^MR||Doe^John^A||19800101|M||C|123 Main St^^Metropolis^NY^10453^USA||(123)456-7890|||M||123456789|987654321
+NK1|1|Doe^Jane^A|Wife|123 Main St^^Metropolis^NY^10453^USA|(123)456-7890
+PV1|1|I|2000^2012^01||||12345^Smith^John^A|12345^Smith^John^A|||||||123456|A|||||||||||||||||||202307080830
+
+
+
+ORU R01
+
+MSH|^~\&|LABADT|Good Health Hospital|MirthConnect|OpenAI|202307080830||ORU^R01|123457|P|2.3
+PID|1||123456^^^Good Health Hospital^MR||Doe^John^A||19800101|M||C|123 Main St^^Metropolis^NY^10453^USA||(123)456-7890|||M||123456789|987654321
+OBR|1||123457^Good Health Hospital|88304^PATHOLOGY^L|||202307080830|||||||||12345^Smith^John^A|||||||||||F
+OBX|1|NM|88304^PATHOLOGY^L|1|4.5|mg/dL|1.0-5.0|N|||F
+
+
+ORM 0O1
+MSH|^~\&|ORM1|Good Health Hospital|MirthConnect|OpenAI|202307080830||ORM^O01|123458|P|2.3
+PID|1||123456^^^Good Health Hospital^MR||Doe^John^A||19800101|M||C|123 Main St^^Metropolis^NY^10453^USA||(123)456-7890|||M||123456789|987654321
+ORC|NW|123458|123456|NW|^^^Good Health Hospital||||202307080830|12345^Smith^John^A
+OBR|1||123458^Good Health Hospital|88304^PATHOLOGY^L|||202307080830|||||||||12345^Smith^John^A|||||||||||F
+
+
+Sample ADT A03 (Discharge/End Visit)
+
+MSH|^~\&|ADT1|Good Health Hospital|MirthConnect|OpenAI|202307080830||ADT^A03|123459|P|2.3
+EVN|A03|202307080830|||
+PID|1||123456^^^Good Health Hospital^MR||Doe^John^A||19800101|M||C|123 Main St^^Metropolis^NY^10453^USA||(123)456-7890|||M||123456789|987654321
+PV1|1|I|2000^2012^01||||12345^Smith^John^A|12345^Smith^John^A|||||||123456|A|||||||||||||||||||202307080830
+
+
+
+Sample DFT P03 (Financial Transaction)
+
+MSH|^~\&|DFT1|Good Health Hospital|MirthConnect|OpenAI|202307080830||DFT^P03|123460|P|2.3
+EVN|P03|202307080830|||
+PID|1||123456^^^Good Health Hospital^MR||Doe^John^A||19800101|M||C|123 Main St^^Metropolis^NY^10453^USA||(123)456-7890|||M||123456789|987654321
+FT1|1|202307080830||CG|88304^PATHOLOGY^L|4.5|USD|202307080830|||12345^Smith^John^A||||||||||||||
+
